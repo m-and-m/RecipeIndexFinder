@@ -1,0 +1,160 @@
+/**UNIVERSAL**/
+html, body {
+	font-family: comic sans MS; 
+	color: #6c6c6c; /* gray */
+}
+
+/**HEADER**/
+header h1 {
+	color: #f800a6; /*dark pink*/
+	text-align: center;
+}
+
+header nav {
+	background: #f1f1f1; /*light ivory*/
+	width: 100%;
+	position: static;
+	top: 0;
+	padding-top: 20px;
+	background: none;
+}
+	
+header nav ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+header nav ul li {
+	margin: 1px 0;
+
+	display: block;
+	text-transform: uppercase; 
+	font-size: 20px;
+	overflow: hidden;
+	font-weight: 200;
+	line-height: 3;
+}
+
+header nav ul li a {
+	display: block;
+	color: #999999; /*gray*/
+	text-decoration: none;
+	width: 100%;
+	text-align: center;
+} 
+
+header nav ul li a:link, header nav ul li a:visited{
+  color: #999999; 
+  text-decoration: none;
+}
+
+header nav ul li a:hover {
+/*	color: #44cce4; */
+	color: #1ba6be;
+}
+
+header nav ul li.current_page_item {
+	color: #f1f1f1;	
+}
+
+header nav ul li.current_page_item a {
+	background: #4a4a4a;
+	color: #f1f1f1;	/*light ivory*/
+}
+
+/**LAYOUT**/
+body {
+	border-left: 192px solid #f1f1f1; /*192px solid #f1f1f1;*/
+	min-height: 860px;
+	height: 100%;
+	/*padding: 20px;
+	font-size: 16px;*/
+}
+		
+header {
+	position: absolute;
+	width: 180px; /*192px;*/
+	background: #f1f1f1;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	height: 100%;
+	min-height: 2000px; 
+	z-index: 100;
+	padding: 20px;
+}
+	
+/**CONTENT**/
+.content {
+	/*margin: 0 15px;
+	margin-left: -200px;*/
+	margin-left: 30px;
+}
+
+.content h2, h3 {
+	color: #f800a6; /*dark pink*/
+}
+
+.content span {
+	color: #b6b6b6; /* dark ivorish */
+}
+
+.content form {
+	width: 50%;
+}
+
+.content a {
+	text-decoration: none;
+}
+
+.content #left_column {
+	float: left;
+	width: 50%;
+}
+
+.content #right_column {
+	float: right;
+	width: 50%;
+}
+
+#left_column ul, #right_column ul {
+ 	list-style-type: square;
+}
+
+#left_column ul span, #right_column ul span{
+ 	color: #4b4b4b;
+ 	font-size: 30px;
+}
+
+#left_column ul li a:link, #right_column ul li a:link {
+	text-decoration: none;
+	color: #686868; /*gray*/
+}
+
+#left_column ul li a:hover, #right_column ul li a:hover {
+	color: #1ba5be; /* blueish */
+}
+
+#left_column ul li a:visited, #right_column ul li a:visited {
+	color: #7f40c0; /* purplish */
+}
+
+div#recipe form#changeRecipeForm p#changes input {
+	visibility: hidden;
+}
+
+/**FOOTER**/
+footer {
+	background: none;
+	padding: 12px 0 0 0 ;
+	margin-left: 30px;
+	clear: both;
+	position: relative;
+}
+
+footer section div{
+	display: block; 
+	float: right;
+	padding-right:20px;
+}
