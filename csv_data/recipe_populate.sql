@@ -2,7 +2,7 @@ use index_finder;
 
 delete from recipe;
 
-load data local infile '/Users/mo2xe/Desktop/indexFinder/csv_data/recipe.csv' 
+load data local infile '/Applications/MAMP/htdocs/RIF/csv_data/recipe.csv' 
 into table index_finder.recipe
 fields terminated by ',' 
 enclosed by '"' 

@@ -103,6 +103,30 @@ if($purpose == "create_recipe") {
 		print("<br /> ID: ".$deleteID[0].
 			  "<br /> Name: ".$deleteName."<br />");
 	}	
+} else if($purpose == "create_tag") {
+	$tagName = $_REQUEST["new_tag"];
+	print("@create tag: ".$tagName."<br />");
+	
+	$query0 = "select * from tag order by tagid desc limit 1";
+	$result0 = exec_my_query($query0);
+	$lastID = mysql_fetch_row($result0);
+	mysql_free_result($result0);	
+	
+	$lastDigit = substr($lastID[0], 1);
+	$currDigit = $lastDigit+1;
+	
+	print("The last digit (".$currDigit."), its type (".gettype($currDigit).")<br />");
+	
+	$query1 = "insert into tag value('T".$currDigit."', '".$tagName."')";
+	$result1 = exec_my_query($query1);
+
+	if ($result1 != 1) {
+		print("Failed to create tag data: ".mysql_error()."<br />");	
+	} else {
+		print("Succeed to create tag: ");
+		print("<br /> ID: T".$currDigit.
+			  "<br /> Name: ".$tagName."<br />");
+	}		
 } else if($purpose == "change_tag") {
 	$originalTag = $_REQUEST["changeTagSelection"];
 	$changeTag = $_REQUEST["change_tag"];

@@ -100,7 +100,7 @@ include("mox2e_php_library.php");
   <h3> TAG DATA SECTION --------------------------------- </h3>  
   <form action="edit_process.php" id="createTagForm">
     <fieldset>
-    	<legend>CREATE NEW TAG --- constructing</legend>
+    	<legend>CREATE NEW TAG</legend>
     	<label>Tag Name*: <input type="text" name="new_tag" id="tagNewMUSTname" size="50" /></label><br /><br />
     	<input type="hidden" name="purpose" value="create_tag" />
     	<input type="submit" value="APPLY"/>

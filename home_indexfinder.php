@@ -26,7 +26,7 @@
  <div class="content">
   <hr>
   <h2>Today's New Uploading Recipes:)</h2>
-  <span>Turn on JavaScrip to use this program.</span>
+  <span>Turn on JavaScript to use this program.</span>
  </div>
  
  <footer>

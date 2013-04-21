@@ -13,17 +13,19 @@ function checkPass() {
 } // checkPass
 
 window.onload = function() {
+// create recipe
 	document.getElementById("createRecipeForm").onsubmit = checkNewRecipeName;
-//constructing
+// change recipe
 	document.getElementById("selectButtonATchange").onclick = makeVisible;	
 	document.getElementById("applyButtonATchange").onclick = checkChangeRecipeName;	
-		
+// delete recipe
 	document.getElementById("deleteRecipeForm").onsubmit = deleteRecipeMsg;
 
-//constructing
+// create tag
 	document.getElementById("createTagForm").onsubmit = checkNewTagName;
-	
+// change tag
 	document.getElementById("changeTagForm").onsubmit = checkChangeTagName;
+// delete tag
 	document.getElementById("deleteTagForm").onsubmit = deleteTagMsg;
 };
 
@@ -96,10 +98,9 @@ function validate(MUSTname, nameSelection) {
 	//Check the new recipe name is already taken.
 	var allName = document.getElementById(nameSelection);
 	for(indx = 0; indx < allName.length; indx++) {
-		found = allName.options[indx].value.toLowerCase().indexOf(checkValue.toLowerCase());
-		if(found == 0) {
+		if(allName.options[indx].value.toLowerCase() == checkValue.toLowerCase()) {
 			alert("'"+checkValue+"' is already taken.\n Use different name.");
-			return false;
+			return false;			
 		}
 	}
 
