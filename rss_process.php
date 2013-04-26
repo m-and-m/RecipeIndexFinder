@@ -25,11 +25,20 @@
  
  <div class="content">
   <hr>
-  <h2>Today's New Uploading Recipes:)</h2>
-  <span>Turn on JavaScript to use this program.</span>
-  <br /><br />
+  <h2>RSS Process Page</h2>
   
-  <form action="rss_process.php" id="requestRssForm">
+  <?php
+  $url = $_REQUEST["rssSelection"];
+//  print("@rss_process.php<br />");
+//  print("Picked this: ".$url."<br />");
+  
+  $session = curl_init($url);
+  $xml = curl_exec($session);
+  var_dump($xml."<br />"); 
+  // Close the session
+  curl_close($session); 
+  ?>
+<!--  <form action="rss_process.php" id="requestRssForm">
   <fieldset>
     	<legend>CHOOSE YOUR FAVORITE RSS</legend>
 		<select name="rssSelection" id="" >
@@ -40,10 +49,7 @@
     	<input type="submit" value="SELECT"/>
   </fieldset>
   </form>
-  
-  <br />
- 
-  <p id="rss.content"></p>
+  -->
  </div>
  
  <footer>
