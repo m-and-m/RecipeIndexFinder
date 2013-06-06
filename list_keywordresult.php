@@ -1,6 +1,6 @@
 <?php
-include("mox2e_php_library.php");
-
+//include("mox2e_php_library.php");
+include("php_library.php");
 $key = $_REQUEST["key"];
 $search_type = $_REQUEST["search_type"];
 

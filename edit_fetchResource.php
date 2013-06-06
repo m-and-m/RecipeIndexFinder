@@ -1,5 +1,6 @@
 <?php
-include("mox2e_php_library.php");
+//include("mox2e_php_library.php");
+include("php_library.php");
 $recipe = $_GET["recipe"];
 
 $query = "select resource, resourcelink from recipe where name='".$recipe."'";

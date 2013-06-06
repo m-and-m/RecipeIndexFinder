@@ -1,5 +1,6 @@
 <?php
-include("mox2e_php_library.php");
+//include("mox2e_php_library.php");
+include("php_library.php");
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

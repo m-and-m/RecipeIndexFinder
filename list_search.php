@@ -1,5 +1,6 @@
 <?php
-include("mox2e_php_library.php");
+//include("mox2e_php_library.php");
+include("php_library.php");
 // NOT BEST WAY to take care of special characters...
 //currently support only  " (double quotes)'
 $query = "select recipeid, name from recipe order by replace(name, '\"', '') asc";

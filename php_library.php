@@ -1,5 +1,5 @@
 <?php
-include("mysql_login.php");
+include("skip/mysql_login.php");
 /******************************* (DIS)CONNECT TO SERVER ************************************/
   $conn = mysql_connect($db_host, $db_user, $db_pass);
   if(!$conn) {
