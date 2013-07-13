@@ -1,5 +1,4 @@
 <?php
-//include("mox2e_php_library.php");
 include("php_library.php");
 $recipe = $_GET["recipe"];
 

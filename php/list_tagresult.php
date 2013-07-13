@@ -1,7 +1,11 @@
 <?php
-//include("mox2e_php_library.php");
 include("php_library.php");
-$query = "select tagid, name from tag group by tagid order by name asc";
+$id = $_GET["id"];
+$name = $_GET["name"];
+
+$query = "select recipeid, name from recipe ".
+		 "where recipeid in (select recipeid from recipeTag where tagid='".$id.
+		 "') order by name asc";
 $result = exec_my_query($query);
 ?>
 
@@ -9,8 +13,8 @@ $result = exec_my_query($query);
 					  
 <html>
  <head>
- 	<title>TAG SEARCH</title>
- 	<link href="indexfinder_design.css" type="text/css" rel="stylesheet" media="screen"/>
+ 	<title>TAG RESULT</title>
+ 	<link href="../css/indexfinder_design.css" type="text/css" rel="stylesheet" media="screen"/>
  </head>
 
  <body>
@@ -32,23 +36,24 @@ $result = exec_my_query($query);
  
  <div class="content">
   <hr>
-  
   <?php
   $numRow = mysql_num_rows($result);
-  print("<h2>Tag Search Page (".$numRow." items)</h2>");
-  
-  $id = "tagid";
+  print("<h2>Tag Result Page (".$numRow." items)</h2>");
+
+  print("<h3>You will see [IndexID : Recipe Title] ------------------------------------------------ </h3>");
+ 
+  $id = "recipeid";
   $name = "name";
-  if(strpos($_SERVER['SCRIPT_NAME'], "tag") != FALSE) {
-	$filename = "tag";
+  if(strpos($_SERVER['SCRIPT_NAME'], "list") != FALSE) {
+	$filename = "list";
   }
-  
+
   display_list($numRow, $result, $id, $name, $filename);
     
   mysql_free_result($result);
   disconnectMysql();
-  ?>
-
+ ?>
+ 
  </div>
  
  <footer>

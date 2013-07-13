@@ -3,7 +3,7 @@
 <html>
  <head>
  	<title>INDEX FINDER</title>
- 	<link href="indexfinder_design.css" type="text/css" rel="stylesheet" media="screen"/>
+ 	<link href="../css/indexfinder_design.css" type="text/css" rel="stylesheet" media="screen"/>
  </head>
 
  <body>

@@ -1,5 +1,4 @@
 <?php
-//include("mox2e_php_library.php");
 include("php_library.php");
 ?>
 
@@ -8,8 +7,8 @@ include("php_library.php");
 <html>
  <head>
  	<title>KEY SEARCH</title>
- 	<link href="indexfinder_design.css" type="text/css" rel="stylesheet" media="screen"/>
-	<script src="keyword_library.js" type="text/javascript"></script>  	
+ 	<link href="../css/indexfinder_design.css" type="text/css" rel="stylesheet" media="screen"/>
+	<script src="../js/keyword_library.js" type="text/javascript"></script>  	
  </head>
 
  <body>
