@@ -1,7 +1,7 @@
 RecipeIndexFinder
 =================
-table schema
-recipe
+*Table Schema*  
+RECIPE
 ```
 recipeid INT NOT NULL
 name VARCHAR(50) NOT NULL
@@ -9,20 +9,20 @@ resource VARCHAR(50)
 resourcelink VARCHAR(200)
 PRIMARY KEY(recipeid)
 ```
-tag
+TAG
 ```
 tagid VARCHAR(10) NOT NULL
 name VARCHAR(30)
 PRIMARY KEY(tagid)
 ```
 
-recipeTag
+RECIPETAG
 ```
 recipeid INT NOT NULL
 tagid VARCHAR(10) NOT NULL
 ```
 
-contents
+CONTENTS
 ```
 recipeid INT NOT NULL,
 ingredients TEXT,
