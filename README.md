@@ -1,6 +1,6 @@
 RecipeIndexFinder
 =================
-*Table Schema*  
+**Table Schema**  
 RECIPE
 ```
 recipeid INT NOT NULL
