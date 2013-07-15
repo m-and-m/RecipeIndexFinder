@@ -1,0 +1,52 @@
+#rss_content {
+   width: 65%;
+}
+
+#rss_content a:link, #url_table a:link {
+	text-decoration: none;
+	color: #686868; /*gray*/
+}
+
+#rss_content a:hover, #url_table a:hover {
+	color: #1ba5be; /* blueish */
+}
+
+#rss_content a:visited, #url_table a:visited {
+	color: #7f40c0; /* purplish */
+}
+
+/**RSS CONTENTS**/
+#datepost {
+	color: #f800a6; /*dark pink*/
+	font-size: 12px;
+}
+
+/**RSS FEED TABLE**/
+#even {
+   background-color: #ececec; /*light gray-ish*/
+}
+
+#odd {
+   background-color: #ffffe4; /*light yellow-ish*/
+}
+
+/**SUBSCRIBED URL LIST**/
+#url_section {
+   position: absolute;
+   top: 150px;
+   width: 25%;
+   right: 10px;
+   padding-left: 10px;
+/*delete later*/
+   border: 1px dotted black;
+}
+
+#url_section span, h4 {
+   color: #6c6c6c; /* gray */
+}
+
+#url_table {
+   width: 90%;
+   text-align: center;
+   background-color: #ffffe4; /*light yellow-ish*/
+}

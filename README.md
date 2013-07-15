@@ -1,4 +1,4 @@
-RecipeIndexFinder
+Recipe Index Finder
 =================
 **Table Schema**  
 RECIPE

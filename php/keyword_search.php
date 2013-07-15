@@ -8,7 +8,7 @@ include("php_library.php");
  <head>
  	<title>KEY SEARCH</title>
  	<link href="../css/indexfinder_design.css" type="text/css" rel="stylesheet" media="screen"/>
-	<script src="../js/keyword_library.js" type="text/javascript"></script>  	
+	<script src="../js/keyword.js" type="text/javascript"></script>  	
  </head>
 
  <body>

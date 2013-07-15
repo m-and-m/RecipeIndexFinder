@@ -1,9 +1,21 @@
+<?php
+include("php_library.php");
+$query = "select sitename, siteurl from rssWebSite order by sitename asc";
+$result = exec_my_query("SET NAMES 'utf8';");
+$result = exec_my_query($query);
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-					  
+				  
 <html>
  <head>
  	<title>INDEX FINDER</title>
+	<meta http-equiv="Content-type" content="text/html; charset=UTF-8" > 	
  	<link href="../css/indexfinder_design.css" type="text/css" rel="stylesheet" media="screen"/>
+ 	<link href="../css/rss_design.css" type="text/css" rel="stylesheet" media="screen"/>
+	<script src="../js/source/jquery-1.6.1.min.js" type="text/javascript"></script>	
+	<script src="../js/source/jquery-v1.6.1.js" type="text/javascript"></script>	
+	<script src="../js/home_rss.js" type="text/javascript"></script> 	
  </head>
 
  <body>
@@ -25,27 +37,41 @@
  
  <div class="content">
   <hr>
-  <h2>Today's New Uploading Recipes:)</h2>
+  <h2>Today's RSS Feed*:) --- constructing</h2>
   <span>Turn on JavaScript to use this program.</span>
-  <br /><br />
-  
-  <form action="rss_process.php" id="requestRssForm">
-  <fieldset>
-    	<legend>CHOOSE YOUR FAVORITE RSS</legend>
-		<select name="rssSelection" id="" >
-			<option value="http://feedblog.ameba.jp/rss/ameblo/giornofelice19/rss20.xml">
-																	いとしのイギリス</option>
-		</select>
-    	<input type="hidden" name="purpose" value="select_rss" />
-    	<input type="submit" value="SELECT"/>
-  </fieldset>
-  </form>
-  
-  <br />
- 
-  <p id="rss.content"></p>
+  <h3> --------------------------------------------------------------- </h3>
+  <!-- RSS feeds come here -->
+  <div id="rss_content"><table></table></div>
+  <!-- subscribed urls come here -->
+  <div id="url_section">
+   <span>+Add Contents</span>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <span>+Remove Contents</span>
+   <span>---------------------------------------------<span>
+   <table id="url_table">
+   <?php
+   		/*
+   		$site[0]:name
+   		$site[1]:url
+   		*/
+   		while($site = mysql_fetch_row($result)) {
+   			//print(iconv("UTF-8", "ASCII//TRASLIT", $site[0]));
+   			/*$ustr = $site[0];
+   			print("<pre>".ord($ustr[0])."</pre>");
+   			print("<pre>".ord($ustr[1])."</pre>");
+   			print("<pre>".ord($ustr[2])."</pre>");
+   			print("<pre>".ord($ustr[3])."</pre>");*/
+   			print("<tr><td><a href=".$site[1].">".$site[0]."</a></td></tr>");
+   		}
+		mysql_free_result($result);
+		
+   ?>
+   </table>
+   </div>
  </div>
- 
+<?php
+   	disconnectMysql();
+?>
  <footer>
   <hr>
   <section>

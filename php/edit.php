@@ -8,7 +8,7 @@ include("php_library.php");
  <head>
  	<title>EDIT PAGE</title>
  	<link href="../css/indexfinder_design.css" type="text/css" rel="stylesheet" media="screen"/>
-	<script src="../js/edit_library.js" type="text/javascript"></script>
+	<script src="../js/edit.js" type="text/javascript"></script>
 	<script src="../js/source/jquery-1.6.1.min.js" type="text/javascript"></script>
 <!--	<script src="source/jquery.ui.core.js" type="text/javascript"></script>
  --></head>
@@ -43,14 +43,14 @@ include("php_library.php");
   <script type="text/javascript">
   var a = [1, 2, 3, 4,4, 5, 5];
   $(function() {
-  alert("in jquery");
+  alert("in jquery @edit.php");
   });
   //a = a.without(5);
-  alert("here");
+  alert("here @edit.php");
   </script>
   <form action="edit_process.php" id="createRecipeForm">
     <fieldset>
-    	<legend>CREATE NEW RECIPE</legend>
+    	<legend>CREATE NEW RECIPE  --- constructing</legend>
     	<label>Recipe Name*: <input type="text" name="new_recipename" id="recipeNewMUSTname" size="50" /></label><br /><br />
     	<label>Resource Name: <input type="text" name="new_resource" size="48" /></label><br /><br />
 		<label>Resource Link: <input type="text" name="new_link" size="50" /></label><br /><br />
