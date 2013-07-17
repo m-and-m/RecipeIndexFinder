@@ -1,6 +1,6 @@
 <?php
 include("php_library.php");
-$query = "select sitename, siteurl from rssWebSite order by sitename asc";
+$query = "select sitename, siteurl, sitexml from rssWebSite order by sitename asc";
 $result = exec_my_query("SET NAMES 'utf8';");
 $result = exec_my_query($query);
 ?>
@@ -42,7 +42,7 @@ $result = exec_my_query($query);
   <h3> --------------------------------------------------------------- </h3>
   <!-- RSS feeds come here -->
   <div id="rss_content"><table></table></div>
-  <!-- subscribed urls come here -->
+  <!-- subscribed urls table comes here -->
   <div id="url_section">
    <span>+Add Contents</span>
    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -50,21 +50,37 @@ $result = exec_my_query($query);
    <span>---------------------------------------------<span>
    <table id="url_table">
    <?php
+   		$arraySites = array(array());   		
+   		$index = 0;
+   		
    		/*
    		$site[0]:name
    		$site[1]:url
+   		$site[2]:xml
    		*/
+   		// store the data (site name/url) in 2d array in order to do sort
    		while($site = mysql_fetch_row($result)) {
-   			//print(iconv("UTF-8", "ASCII//TRASLIT", $site[0]));
-   			/*$ustr = $site[0];
-   			print("<pre>".ord($ustr[0])."</pre>");
-   			print("<pre>".ord($ustr[1])."</pre>");
-   			print("<pre>".ord($ustr[2])."</pre>");
-   			print("<pre>".ord($ustr[3])."</pre>");*/
-   			print("<tr><td><a href=".$site[1].">".$site[0]."</a></td></tr>");
+			
+			// store site name/url in arraySites to display all subscribed sites
+   			$arraySites[$index][0] = $site[0];
+			$arraySites[$index][1] = $site[1];   
+			// store site xml to access it from home_rss.js
+			$arraySites[$index][2] = $site[2];   
+
+   			$index++;			
    		}
+
 		mysql_free_result($result);
 		
+		// sort using with a function called 'sitenameCmp' in php_library.php
+		usort($arraySites, "sitenameCmp");	
+		
+		// dump sorted arrays	
+		while (list($key, $value) = each($arraySites)) {
+
+			 print "<tr><td><span hidden id='xml'>".$value[2].",</span><a href=".$value[$key].">".$value[0]."</a></td></tr>";
+
+		}
    ?>
    </table>
    </div>

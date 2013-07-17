@@ -1,6 +1,8 @@
 <?php
 include("../skip/mysql_login.php");
+
 /******************************* (DIS)CONNECT TO SERVER ************************************/
+
   $conn = mysql_connect($db_host, $db_user, $db_pass);
   if(!$conn) {
   	die("Failed to connect database: ".mysql_error()."<br />");
@@ -171,4 +173,12 @@ include("../skip/mysql_login.php");
  	} 
  	return 0;
  } // checkFirstChar
+ 
+ /****************************** value compare *************************************/
+ 
+ function sitenameCmp ($name1, $name2) {
+ 
+ 	return strcasecmp($name1[0], $name2[0]);
+ 
+ } // sitenameCmp
 ?>

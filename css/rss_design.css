@@ -27,7 +27,7 @@
 }
 
 #odd {
-   background-color: #ffffe4; /*light yellow-ish*/
+   background-color: #fff4f4; /*light pink-ish*/
 }
 
 /**SUBSCRIBED URL LIST**/
@@ -48,5 +48,5 @@
 #url_table {
    width: 90%;
    text-align: center;
-   background-color: #ffffe4; /*light yellow-ish*/
+   background-color: #fff4f4; /*light pink-ish*/
 }

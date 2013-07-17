@@ -1,3 +1,4 @@
+<!-- this file is called by edit.js -->
 <?php
 include("php_library.php");
 $recipe = $_GET["recipe"];
