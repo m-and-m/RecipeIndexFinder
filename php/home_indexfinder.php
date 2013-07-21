@@ -44,10 +44,10 @@ $result = exec_my_query($query);
   <div id="rss_content"><table></table></div>
   <!-- subscribed urls table comes here -->
   <div id="url_section">
-   <span>+Add Contents</span>
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   <span>+Remove Contents</span>
-   <span>---------------------------------------------<span>
+   <span id="addcnts">+Add Contents</span>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+   <span id="rmvcnts">-Remove Contents</span>
+   <span> ------------------------------------------- <span>
    <table id="url_table">
    <?php
    		$arraySites = array(array());   		
@@ -64,7 +64,6 @@ $result = exec_my_query($query);
 			// store site name/url in arraySites to display all subscribed sites
    			$arraySites[$index][0] = $site[0];
 			$arraySites[$index][1] = $site[1];   
-			// store site xml to access it from home_rss.js
 			$arraySites[$index][2] = $site[2];   
 
    			$index++;			

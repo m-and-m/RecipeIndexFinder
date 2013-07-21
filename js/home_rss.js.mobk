@@ -1,0 +1,196 @@
+var days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Nov", "Dec"];
+var xmlinfo = new Array();
+//var dummy = new Array(new Array());
+
+window.onload = function () {
+
+    fetchRSSfeed();
+
+//    dumpData(xmlinfo);
+    
+};
+
+function fetchRSSfeed() {
+
+
+    var totalCnt = 0;
+	var i;
+	
+/** get xml list to access **/
+    var xmls = $("span#xml").text();
+
+    var arrayXMLs = xmls.split(",");
+    var numXML = arrayXMLs.length;
+/*
+    console.log(xmls);
+    console.log(arrayXMLs.length);
+*/
+
+/**	clear the content in the div for the next feed **/
+    $("#rss_content").empty();	
+	
+/** start accessing each xml **/
+    for (i = 0; i < numXML - 1; i++) {
+        $.ajax({
+            type: "GET",
+            url: "../php/proxy.php?xml=" + arrayXMLs[i],
+            dataType: "xml",
+            success: function (data) {
+
+                var html;
+				var prCnt=0;
+				
+                // parse elements for a xml		
+                $(data).find("item").each(function (index) {
+
+                    // the current section of the content
+                    var $item = $(this);
+                    // the title
+                    var title = $item.find("title").text();
+                    // skip advertisements from Japanese site
+                    if (title.indexOf("PR:") == 0) {
+                    	prCnt++;
+                        return true;
+                    }
+                    // the url
+                    var link = $item.find("link").text();
+                    // the pubdate
+                    var pubDate = $item.find("pubDate").text();                    
+//                    var new_pubDate = reformingDate(pubDate);
+          			var new_pubDate = new Date(pubDate);
+
+					xmlinfo[totalCnt] = new Array();
+					// "index-prCnt": show index number without skipping missing PR index
+					xmlinfo[totalCnt].push(index-prCnt, title, link, new_pubDate);
+
+                    totalCnt++;
+                    
+                    console.log(i+"--->");
+//					  dummy = xmlinfo;
+
+					console.log(totalCnt+" ");
+//					console.log("BEFORE");
+					console.log(xmlinfo);
+
+//                    sortByDate();
+
+                });
+            },
+            error: function () {
+                alert("failed to access to xml file @home_rss.js");
+            }
+        });
+        					
+
+    } // end of for loop
+} // fetchRSSfeed
+
+//SORTING BY DAY -- will run from 2nd site
+//			if(i > 0) {
+				//console.log("AFTER");
+//???			xmlinfo.sortByDate(totalCnt);
+	
+//sortByDate(xmlinfo, totalCnt);
+
+//				xmlinfo = sortByDate(xmlinfo, totalCnt);
+//			}
+			
+			//console.log(xmlinfo);
+			
+
+
+function sortByDate(array2d) {
+
+//console.log("whole array--->");
+//OK: 2d array form:
+console.log(array2d);
+//console.log(array2d.indexOf("0", 1))
+//OK: index: console.log(comparedDateIndx);
+//OK: index: console.log(comparedDateIndx[]);
+//compareDates(array2d[comparedDateIndx-1], array2d[comparedDateIndx]);
+/*
+	var rslt;
+	var tmp;
+	
+	while (comparedDateIndx != null) {
+		var curr = comparedDateIndx -1;
+
+		while (curr > -1) {
+		
+			rslt = compareDates(array2d[curr], array2d[comparedDateIndx]);
+
+			if(rslt == 1) {
+				curr--;
+			} else if(rslt == -1) {
+	
+				array2d.splice(curr, 0, array2d[comparedDateIndx]);
+				array2d.splice(comparedDateIndx+1, 1);
+				break;
+			} 
+		} // inner while
+		
+		comparedDateIndx++;
+	
+	} // outer while
+	
+	return array2d;
+*/	
+} // sortByDate
+
+function compareDates(c1, c2) {
+
+	var rslt;
+/*
+	if(c1[2] > c2[2]) { // previous post is newer: skip
+		rslt = 1;		
+	} else if (c1[2] > c2[2]) { // previous post is older: swap
+		rslt = -1;
+	} else { // same old: do nothing
+		rslt = 0;		
+	}
+*/	
+//	console.log(c1+","+c2);
+//	return rslt;	
+} // compareDates
+
+// DUMP DATA
+/*
+
+                    // the html to output the feed to the browser window
+                    if (totalCnt % 2 == 0) {
+
+                        html = "<tr id='even'><td><a href=" + link + ">" + title + "</a>";
+                        html += "<span id='datepost'>&nbsp;&nbsp;&nbsp;&nbsp;" + formatedDate;
+                        html += "&nbsp;&nbsp;&nbsp;&nbsp;<br/></span></td></tr>";
+
+                    } else if (totalCnt % 2 == 1) {
+
+                        html = "<tr id='odd'><td><a href=" + link + ">" + title + "</a>";
+                        html += "<span id='datepost'>&nbsp;&nbsp;&nbsp;&nbsp;" + formatedDate;
+                        html += "&nbsp;&nbsp;&nbsp;&nbsp;<br/></span></td></tr>";
+                    }
+                                        //put that feed content on the screen
+                    $("#rss_content").append($(html));
+
+*/
+
+function reformingDate(date) {
+
+        	// reformated pubdate to PDT/PT
+            var formatedDate = new Date(date);
+                    
+			// reform the date again: Day Mon 01 YEAR HH:MM:SS
+			var dayIdx = formatedDate.getDay();
+			var monthIdx = formatedDate.getMonth();
+			var date = formatedDate.getDate();
+			var year = formatedDate.getFullYear();
+			var hour = formatedDate.getHours();
+			var min = formatedDate.getMinutes();
+			var sec = formatedDate.getSeconds();
+			
+			var new_pubDate = days[dayIdx]+" "+months[monthIdx]+" "+date+" "+year+" ";
+			new_pubDate += hour+":"+min+":"+sec;
+			
+			return new_pubDate;
+} // reformingDate

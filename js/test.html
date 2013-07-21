@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+ <head>
+ 	
+	<script src="../js/source/jquery-1.6.1.min.js" type="text/javascript"></script>
+</head>
+<body>
+<script>
+var day1 = new Date("Mon Jul 15 2013 10:32:02 GMT-0700 (PDT)");
+var day2 = new Date("Thu Jun 27 2013 00:09:46 GMT-0700 (PDT)");
+var day3 = new Date("Mon Jul 15 2012 10:32:02 GMT-0700 (PDT)");
+
+console.log(day1 > day2); // true: new > old
+console.log(day1 < day2); // false
+console.log(day1 == day2); // false
+console.log(day1.getTime() > day2.getTime()); // true:
+console.log(day1.getTime() < day2.getTime()); // false:
+console.log(day1 > day3); // true: new > old
+
+</script>
+
+</body>
+</html>

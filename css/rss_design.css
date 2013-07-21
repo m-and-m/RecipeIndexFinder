@@ -1,5 +1,5 @@
 #rss_content {
-   width: 65%;
+   width: 75%;
 }
 
 #rss_content a:link, #url_table a:link {
@@ -30,13 +30,19 @@
    background-color: #fff4f4; /*light pink-ish*/
 }
 
+#siteTitle {
+	color: #6c6c6c; /*gray*/
+	font-size: 12px;
+}
+
 /**SUBSCRIBED URL LIST**/
 #url_section {
    position: absolute;
    top: 150px;
-   width: 25%;
+   width: 23%;
    right: 10px;
-   padding-left: 10px;
+   padding: 10px;
+   padding-right: 10px;
 /*delete later*/
    border: 1px dotted black;
 }
@@ -45,8 +51,13 @@
    color: #6c6c6c; /* gray */
 }
 
+#url_section span#addcnts, #url_section span#rmvcnts {
+   background-color: #ececec; /*light gray-ish*/
+}
+
 #url_table {
-   width: 90%;
+   width: 100%;
    text-align: center;
    background-color: #fff4f4; /*light pink-ish*/
 }
+
