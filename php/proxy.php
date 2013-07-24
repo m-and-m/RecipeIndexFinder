@@ -14,6 +14,5 @@ header("Content-Type: text/xml");
 //array_push($xmlHolder, $xml);
 print($xml);
 
-//mysql_free_result($result);
 curl_close($session);
 ?>

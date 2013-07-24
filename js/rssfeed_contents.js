@@ -7,18 +7,19 @@ var MyGlobal = {
     numXML: 0,
     arrayXMLs: [],
     xmlinfo: new Array()
-}
-
-window.onload = function () {
-
-    fetchRSSfeed();
-    // refresh page every 30 mins
-    setTimeout(fetchRSSfeed, 300000);
 };
 
-function fetchRSSfeed() {
+$(document).ready(function() {
 
-    var i;
+    fetchRSSfeed();
+    
+    // refresh page every 1 hour
+    setInterval(fetchRSSfeed, 3600000);
+    //setTimeout(fetchRSSfeed, 3600000);
+
+});
+
+function fetchRSSfeed() {
 
     /** get xml list to access **/
     var xmls = $("span#xml").text();
@@ -42,7 +43,7 @@ function callAjax() {
         dataType: "xml",
         success: parseResult,
         error: function () {
-            alert("failed to access to xml file @home_rss.js");
+            alert("failed to access to xml file @rssfeed_contents.js");
         }
     });
 
@@ -52,7 +53,6 @@ function parseResult(data) {
 
     var prCnt = 0;
     
-    	
 	var siteTitle = $(data).find("channel").children("title").text();
     
     // parse elements for a xml		
@@ -73,12 +73,6 @@ function parseResult(data) {
         var pubDate = $item.find("pubDate").text(); 
         var new_pubDate = new Date(pubDate);
 
-       
-/*
-console.log(pubDate+"\n");
-console.log(new_pubDate+"\n");
-console.log("--->");
-*/
         MyGlobal.xmlinfo[MyGlobal.totalCnt] = new Array();
         // "index-prCnt": recalculating index (considering skip PR posts) 
         MyGlobal.xmlinfo[MyGlobal.totalCnt].push(index - prCnt, title, link, new_pubDate, siteTitle);

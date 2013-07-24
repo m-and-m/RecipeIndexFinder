@@ -18,7 +18,7 @@
 /**RSS CONTENTS**/
 #datepost {
 	color: #f800a6; /*dark pink*/
-	font-size: 12px;
+	font-size: 11px;
 }
 
 /**RSS FEED TABLE**/
@@ -32,32 +32,32 @@
 
 #siteTitle {
 	color: #6c6c6c; /*gray*/
-	font-size: 12px;
+	font-size: 11px;
 }
 
 /**SUBSCRIBED URL LIST**/
 #url_section {
    position: absolute;
    top: 150px;
-   width: 23%;
+   width: 20%;
    right: 10px;
    padding: 10px;
    padding-right: 10px;
 /*delete later*/
    border: 1px dotted black;
+   font-size: 11px;
 }
 
 #url_section span, h4 {
    color: #6c6c6c; /* gray */
 }
 
-#url_section span#addcnts, #url_section span#rmvcnts {
+#url_section span#addcnt {
    background-color: #ececec; /*light gray-ish*/
 }
 
 #url_table {
    width: 100%;
-   text-align: center;
+/*text-align: center;*/
    background-color: #fff4f4; /*light pink-ish*/
 }
-

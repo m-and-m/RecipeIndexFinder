@@ -1,6 +1,6 @@
 <?php
 include("php_library.php");
-$query = "select sitename, siteurl, sitexml from rssWebSite order by sitename asc";
+$query = "select sitename, sitexml, siteurl from rssWebSite order by sitename asc";
 $result = exec_my_query("SET NAMES 'utf8';");
 $result = exec_my_query($query);
 ?>
@@ -15,8 +15,9 @@ $result = exec_my_query($query);
  	<link href="../css/rss_design.css" type="text/css" rel="stylesheet" media="screen"/>
 	<script src="../js/source/jquery-1.6.1.min.js" type="text/javascript"></script>	
 	<script src="../js/source/jquery-v1.6.1.js" type="text/javascript"></script>	
-	<script src="../js/home_rss.js" type="text/javascript"></script> 	
- </head>
+	<script src="../js/rssfeed_contents.js" type="text/javascript"></script> 
+	<script src="../js/rssfeed_sitesmgmt.js" type="text/javascript"></script>
+</head>
 
  <body>
  
@@ -44,9 +45,7 @@ $result = exec_my_query($query);
   <div id="rss_content"><table></table></div>
   <!-- subscribed urls table comes here -->
   <div id="url_section">
-   <span id="addcnts">+Add Contents</span>
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   <span id="rmvcnts">-Remove Contents</span>
+   <span id="addcnt">+Add Content</span>
    <span> ------------------------------------------- <span>
    <table id="url_table">
    <?php
@@ -55,8 +54,8 @@ $result = exec_my_query($query);
    		
    		/*
    		$site[0]:name
-   		$site[1]:url
-   		$site[2]:xml
+   		$site[1]:xml
+   		$site[2]:url
    		*/
    		// store the data (site name/url) in 2d array in order to do sort
    		while($site = mysql_fetch_row($result)) {
@@ -76,8 +75,12 @@ $result = exec_my_query($query);
 		
 		// dump sorted arrays	
 		while (list($key, $value) = each($arraySites)) {
+		
+//			 print "<tr><td><img src='../imgs/trash.png' height='17' width='17' id='rmvcnt'></td>".
+//			 "<td><span hidden id='xml'>".$value[1].",</span><a href=".$value[2]." id='selectname'>".$value[0]."</a></td></tr>";
 
-			 print "<tr><td><span hidden id='xml'>".$value[2].",</span><a href=".$value[$key].">".$value[0]."</a></td></tr>";
+			 print "<tr><td><img src='../imgs/trash.png' height='17' width='17' class='rmvcnt'/>".
+			 "<a href=".$value[2]." class='selectname'>".$value[0]."</a><span hidden id='xml'>".$value[1].",</span></td></tr>";
 
 		}
    ?>
