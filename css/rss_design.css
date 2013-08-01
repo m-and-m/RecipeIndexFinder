@@ -54,6 +54,7 @@
 
 #url_section span#addcnt {
    background-color: #ececec; /*light gray-ish*/
+   font-size: 14px;
 }
 
 #url_table {

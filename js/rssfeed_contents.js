@@ -184,14 +184,14 @@ function dumpData(array2d) {
         // the html to output the feed to the browser window
         if (index % 2 == 0) {
 
-            html += "<tr id='odd'><td><a href='" + post[2] + "'>" + post[1] + "</a>";
-            html += "&nbsp;&nbsp;&nbsp;&nbsp;<span id='siteTitle'>"+ post[4] + "</span>&nbsp;&nbsp;&nbsp;&nbsp;";
+            html += "<tr id='odd'><td><a href='" + post[2] + "'>" + post[1] + "</a><br/>";
+            html += "<span id='siteTitle'>"+ post[4] + "</span>&nbsp;&nbsp;&nbsp;&nbsp;";
             html += "<span id='datepost'>" + formedDate + "&nbsp;&nbsp;&nbsp;&nbsp;<br/></span></td></tr>";
 
         } else if (index % 2 == 1) {
 
-            html += "<tr id='even'><td><a href='" + post[2] + "'>" + post[1] + "</a>";
-            html += "&nbsp;&nbsp;&nbsp;&nbsp;<span id='siteTitle'>"+ post[4] + "</span>&nbsp;&nbsp;&nbsp;&nbsp;";
+            html += "<tr id='even'><td><a href='" + post[2] + "'>" + post[1] + "</a><br/>";
+            html += "<span id='siteTitle'>"+ post[4] + "</span>&nbsp;&nbsp;&nbsp;&nbsp;";
         	html += "<span id='datepost'>" + formedDate + "<br/></span></td></tr>";
         }
 

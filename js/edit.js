@@ -1,33 +1,49 @@
-function checkPass() {
-	
-	do {
-		flag = false;
-		pass = prompt("Got Password?");
-		if(pass != "ofcourse!") {
-			alert("Got wrong one! Sorry..try again.");
-			flag = true;
-		}
-	
-	} while (flag);
-	 
-} // checkPass
+$(document).ready(function () {
 
-window.onload = function() {
-// create recipe
-	document.getElementById("createRecipeForm").onsubmit = checkNewRecipeName;
-// change recipe
-	document.getElementById("selectButtonATchange").onclick = makeVisible;	
-	document.getElementById("applyButtonATchange").onclick = checkChangeRecipeName;	
-// delete recipe
-	document.getElementById("deleteRecipeForm").onsubmit = deleteRecipeMsg;
+    // create recipe
+    document.getElementById("createRecipeForm").onsubmit = checkNewRecipeName;
+    // change recipe
+    document.getElementById("selectButtonATchange").onclick = makeVisible;
+    document.getElementById("applyButtonATchange").onclick = checkChangeRecipeName;
+    document.getElementById("cancelButtonATchange").onclick = makeInvisible;
+    // delete recipe
+    document.getElementById("deleteRecipeForm").onsubmit = deleteRecipeMsg;
 
-// create tag
-	document.getElementById("createTagForm").onsubmit = checkNewTagName;
-// change tag
-	document.getElementById("changeTagForm").onsubmit = checkChangeTagName;
-// delete tag
-	document.getElementById("deleteTagForm").onsubmit = deleteTagMsg;
-};
+    // create tag
+    document.getElementById("createTagForm").onsubmit = checkNewTagName;
+    // change tag
+    document.getElementById("changeTagForm").onsubmit = checkChangeTagName;
+    // delete tag
+    document.getElementById("deleteTagForm").onsubmit = deleteTagMsg;
+
+    // add tags
+    $("#addTags").dropdownchecklist({
+        maxDropHeight: 200,
+        width: 300,
+        textFormatFunction: function (options) {
+            var selectedOptions = options.filter(":selected");
+            var countOfSelected = selectedOptions.size();
+            var size = options.size();
+            switch (countOfSelected) {
+           		case 0:
+                	return "Add tags?";
+            	case 1:
+                	return selectedOptions.text();
+            	default:
+                	return countOfSelected + " Tags";
+            }
+        },
+        onComplete: function (selector) {
+            var values = "";
+            for (i = 0; i < selector.options.length; i++) {
+                if (selector.options[i].selected && (selector.options[i].value != "")) {
+                    values += selector.options[i].value + ";";
+                }
+            }
+        }
+    });
+
+});
 
 function checkNewRecipeName() {
 	return validate("recipeNewMUSTname","recipeSelect");
@@ -46,7 +62,7 @@ function checkChangeTagName() {
 }
 
 function deleteRecipeMsg() {
-	return confirmation("recipeSelect");
+	return confirmation("deleteRecipeSelect");
 }
 
 function deleteTagMsg() {
@@ -57,17 +73,52 @@ function makeVisible() {
 	document.getElementById("changeName").style.visibility = "visible";
 	document.getElementById("changeResource").style.visibility = "visible";
 	document.getElementById("changeResourceLink").style.visibility = "visible";
+	document.getElementById("changeTagMemo").style.display = "inline";
+	document.getElementById("changeTagSelect").style.display = "block";
 	document.getElementById("applyButtonATchange").style.visibility = "visible";
+	document.getElementById("cancelButtonATchange").style.visibility = "visible";
 	
 	var recipe = document.getElementById("recipeSelect").value;
 	var resourceResult = displayResource(recipe);
-//	alert(resourceResult);
+	
+	//alert(resourceResult);
+
+	/* fieldElement[0]: resource name
+	   fieldElement[1]: resource link
+	   fieldElement[2+]: tags
+	*/
 	var fieldElement = resourceResult.split("\|");
 	
 	document.getElementById("changeName").value = recipe;
 	document.getElementById("changeResource").value = fieldElement[0];
 	document.getElementById("changeResourceLink").value = fieldElement[1];
-}
+	
+//HERE set pre-select
+	if(fieldElement[2] != null) {
+		var countTag = 2;
+		while(fieldElement[countTag]) {
+//		alert(fieldElement[countTag]);
+console.log(			$("#"+fieldElement[countTag]).value);
+console.log(			$("#"+fieldElement[countTag]).val());
+console.log(			$("#"+fieldElement[countTag]).text());
+console.log("\n\n");
+
+			countTag++;
+		}
+	}
+	
+} // makeVisible
+
+function makeInvisible() {
+	document.getElementById("changeName").style.visibility = "hidden";
+	document.getElementById("changeResource").style.visibility = "hidden";
+	document.getElementById("changeResourceLink").style.visibility = "hidden";
+	document.getElementById("changeTagMemo").style.display = "none";
+	document.getElementById("changeTagSelect").style.display = "none";
+	document.getElementById("applyButtonATchange").style.visibility = "hidden";
+	document.getElementById("cancelButtonATchange").style.visibility = "hidden";
+	location.reload();
+} // makeInvisible
 
 function displayResource(recipe) {
 	var ajax = new XMLHttpRequest();
@@ -129,6 +180,7 @@ CONFIRMATION
 function confirmation(nameSelection) {
 	//alert("@deleteRecipeMsg js_library");
 	var deleteName = document.getElementById(nameSelection).value;
+
 	decision = confirm("You are trying to delete: "+deleteName+"\n Are you sure?");
 
 	return decision;
@@ -176,4 +228,19 @@ function ajaxFailed(ajax, exception) {
 	
 	alert(msg);
 } // ajaxFailed
+
+function checkPass() {
+	
+	do {
+		flag = false;
+		pass = prompt("Got Password?");
+		if(pass != "ofcourse!") {
+			alert("Got wrong one! Sorry..try again.");
+			flag = true;
+		}
+	
+	} while (flag);
+	 
+} // checkPass
+
 */

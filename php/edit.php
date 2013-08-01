@@ -1,5 +1,32 @@
 <?php
 include("php_library.php");
+
+$queries = array("select name from tag order by name asc", 
+				 "select name from recipe order by replace(name, '\"', '') asc");
+		
+$count = 0;
+$tagArray = array();
+$recipeArray = array();
+
+foreach($queries as $onequery) {
+	$result = exec_my_query($onequery);
+	while($row = mysql_fetch_row($result)) {
+		switch($count) {
+			case 0:
+//				$tagcount++;
+				array_push($tagArray, ucwords(strtolower($row[0])));
+				break;
+			case 1:
+//				$recipecount++;
+				array_push($recipeArray, ucwords(strtolower($row[0])));
+				break;
+			default: 
+				break;
+		}
+	}
+		$count++;
+		mysql_free_result($result);	
+}		
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -7,13 +34,19 @@ include("php_library.php");
 <html>
  <head>
  	<title>EDIT PAGE</title>
- 	<link href="../css/indexfinder_design.css" type="text/css" rel="stylesheet" media="screen"/>
-	<script src="../js/edit.js" type="text/javascript"></script>
-	<script src="../js/source/jquery-1.6.1.min.js" type="text/javascript"></script>
-<!--	<script src="source/jquery.ui.core.js" type="text/javascript"></script>
- --></head>
+ 	 
+ 	<link href="../css/indexfinder_design.css" type="text/css" rel="stylesheet"/>
+ 	<link href="../css/jquery-ui-1.8.13.custom.css" type="text/css" rel="stylesheet"/>
+ 	<link href="../css/ui.dropdownchecklist.themeroller.css" type="text/css" rel="stylesheet"/> 
+<!-- 	<link href="../css/ui.dropdownchecklist.standalone.css" type="text/css" rel="stylesheet"/> -->
 
-<!-- <body onLoad="checkPass();"> -->
+	<script src="../js/source/jquery-v1.6.1.js" type="text/javascript"></script>
+	<script src="../js/source/jquery-ui-1.8.13.custom.js" type="text/javascript"></script>	
+	<script src="../js/source/ui.dropdownchecklist-1.4.js" type="text/javascript"></script>	
+	<script src="../js/edit.js" type="text/javascript"></script>
+
+</head>
+
  <body> 
  
  <header>
@@ -38,25 +71,23 @@ include("php_library.php");
   <!--RECIPE EDIT-->
   <div id="recipe">
   <h3> RECIPE DATA SECTION ------------------------------ </h3>
-  
-  
-  <script type="text/javascript">
-  var a = [1, 2, 3, 4,4, 5, 5];
-  $(function() {
-  alert("in jquery @edit.php");
-  });
-  //a = a.without(5);
-  alert("here @edit.php");
-  </script>
-  <form action="edit_process.php" id="createRecipeForm">
+
+  <form action="edit_process.php" id="createRecipeForm"> 
     <fieldset>
-    	<legend>CREATE NEW RECIPE  --- constructing</legend>
+    	<legend>CREATE NEW RECIPE</legend>
     	<label>Recipe Name*: <input type="text" name="new_recipename" id="recipeNewMUSTname" size="50" /></label><br /><br />
     	<label>Resource Name: <input type="text" name="new_resource" size="48" /></label><br /><br />
 		<label>Resource Link: <input type="text" name="new_link" size="50" /></label><br /><br />
     	<input type="hidden" name="purpose" value="create_recipe" />
-    	<span>Add tag?</span><br />
-    	
+		<div>
+		<select name="tags" id="addTags" multiple="multiple">
+		<?php		
+			foreach($tagArray as $onetag) {
+				print("<option>".$onetag."</option>");
+			}
+		?>
+		</select>
+		</div><br />
     	<input type="submit" value="APPLY"/>
     </fieldset>
   </form>
@@ -64,25 +95,34 @@ include("php_library.php");
 
   <form action="edit_process.php" id="changeRecipeForm">  
   <fieldset>
-    	<legend>CHANGE RECIPE</legend>
+    	<legend>CHANGE RECIPE --- constructing</legend>
 		<span>I want to change this recipe: </span>
 		<select name="changeRecipeSelection" id="recipeSelect" >
 		<?php
-			$query3 = "select name from recipe order by replace(name, '\"', '') asc";
-			$result3 = exec_my_query($query3);
-			while($row = mysql_fetch_row($result3)) {
-				print("<option>".ucwords(strtolower($row[0]))."</option>");
+			foreach($recipeArray as $onerecipe) {
+				print("<option>".$onerecipe."</option>");
 			}
-			mysql_free_result($result3);
 		?>
 		</select>
     	<input type="button" value="SELECT" id="selectButtonATchange"/><br />
 		<p id="changes">
-    	<label>Recipe Name*: <input type="text" name="change_recipename" id="changeName" size="50" visibility="hidden" /></label><br /><br />
+    	<label>Recipe Name*: <input type="text" name="change_recipename" id="changeName" size="50" /></label><br /><br />
     	<label>Resource Name: <input type="text" name="change_resource" id="changeResource" size="48" /></label><br /><br />
     	<label>Resource Link: <input type="text" name="change_link" id="changeResourceLink" size="50" /></label><br /><br />
+
+		<span id="changeTagMemo">Select multiple tags with SUPER key</span><br />
+		<select name="changeTagSelection[]" id="changeTagSelect" multiple="multiple" size="5">
+		<?php		
+			foreach($tagArray as $onetag) {
+				print("<option value='".$onetag."'>".$onetag."</option>");
+			}
+		?>
+		</select>
+
+		<br />
     	<input type="hidden" name="purpose" value="change_recipe" />
-    	<input type="submit" value="APPLY" id="applyButtonATchange"/>
+    	<input type="submit" name="submit" value="APPLY" id="applyButtonATchange"/>
+    	<input type="button" name="submit" value="CANCEL" id="cancelButtonATchange"/>
     	</p>
     </fieldset>
   </form>
@@ -91,14 +131,12 @@ include("php_library.php");
   <form action="edit_process.php" id="deleteRecipeForm">  
     <fieldset>
     	<legend>DELETE RECIPE</legend>
-		<select name="deleteRecipeSelection" id="recipeSelect" >
+		<select name="deleteRecipeSelection" id="deleteRecipeSelect" >
+
 		<?php
-			$query0 = "select name from recipe order by replace(name, '\"', '') asc";
-			$result0 = exec_my_query($query0);
-			while($row = mysql_fetch_row($result0)) {
-				print("<option>".ucwords(strtolower($row[0]))."</option>");
+			foreach($recipeArray as $onerecipe) {
+				print("<option>".$onerecipe."</option>");
 			}
-			mysql_free_result($result0);
 		?>
 		</select><br /><br />
     	<input type="hidden" name="purpose" value="delete_recipe" />
@@ -127,12 +165,9 @@ include("php_library.php");
     	<legend>CHANGE TAG NAME</legend>
 		<select name="changeTagSelection" id="tagSelectChange" >
 		<?php
-			$query1 = "select name from tag order by name asc";
-			$result1 = exec_my_query($query1);
-			while($row = mysql_fetch_row($result1)) {
-				print("<option>".ucwords(strtolower($row[0]))."</option>");
+			foreach($tagArray as $onetag) {
+				print("<option>".$onetag."</option>");
 			}
-			mysql_free_result($result1);
 		?>
 		</select>
 		<span>TO</span>
@@ -148,12 +183,9 @@ include("php_library.php");
     	<legend>DELETE TAG</legend>
 		<select name="deleteTagSelection" id="tagSelectDelete" >
 		<?php
-			$query2 = "select name from tag order by name asc";
-			$result2 = exec_my_query($query2);
-			while($row = mysql_fetch_row($result2)) {
-				print("<option>".ucwords(strtolower($row[0]))."</option>");
+			foreach($tagArray as $onetag) {
+				print("<option>".$onetag."</option>");
 			}
-			mysql_free_result($result2);
 		?>
 		</select><br /><br />
     	<input type="hidden" name="purpose" value="delete_tag" />

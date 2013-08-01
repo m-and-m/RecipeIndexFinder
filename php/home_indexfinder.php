@@ -38,7 +38,7 @@ $result = exec_my_query($query);
  
  <div class="content">
   <hr>
-  <h2>Today's RSS Feed*:) --- constructing</h2>
+  <h2>Today's RSS Feed*:)</h2>
   <span>Turn on JavaScript to use this program.</span>
   <h3> --------------------------------------------------------------- </h3>
   <!-- RSS feeds come here -->
