@@ -1,8 +1,8 @@
 $(document).ready(function () {
-
     // create recipe
     document.getElementById("createRecipeForm").onsubmit = checkNewRecipeName;
     // change recipe
+    document.getElementById("recipeSelect").onchange = makeInvisible;
     document.getElementById("selectButtonATchange").onclick = makeVisible;
     document.getElementById("applyButtonATchange").onclick = checkChangeRecipeName;
     document.getElementById("cancelButtonATchange").onclick = makeInvisible;
@@ -81,33 +81,36 @@ function makeVisible() {
 	var recipe = document.getElementById("recipeSelect").value;
 	var resourceResult = displayResource(recipe);
 	
-	//alert(resourceResult);
+//	alert(resourceResult);
 
 	/* fieldElement[0]: resource name
 	   fieldElement[1]: resource link
-	   fieldElement[2+]: tags
+	   fieldElement[2+]: tag ids
 	*/
 	var fieldElement = resourceResult.split("\|");
 	
+	alert(fieldElement);
+
 	document.getElementById("changeName").value = recipe;
 	document.getElementById("changeResource").value = fieldElement[0];
 	document.getElementById("changeResourceLink").value = fieldElement[1];
-	
-//HERE set pre-select
+
+	// set pre-select
 	if(fieldElement[2] != null) {
 		var countTag = 2;
 		while(fieldElement[countTag]) {
-//		alert(fieldElement[countTag]);
-console.log(			$("#"+fieldElement[countTag]).value);
-console.log(			$("#"+fieldElement[countTag]).val());
-console.log(			$("#"+fieldElement[countTag]).text());
-console.log("\n\n");
-
+			var tagID = fieldElement[countTag];
+			$("#changeTagSelect option[value='" + tagID.toLowerCase() + "']").attr("selected", true);
+//			console.log("from option value: "+$("#changeTagSelect option[value=" + tagID + "]").val());
 			countTag++;
 		}
 	}
 	
 } // makeVisible
+
+function js_preg_quote (str) {
+	return (str + "").replace(new RegExp("[.\\\\+*?\\[\\^\\]$(){}=!<>|:\\-]", "g"), "\\$&");
+} // js_preg_quote
 
 function makeInvisible() {
 	document.getElementById("changeName").style.visibility = "hidden";
@@ -117,6 +120,11 @@ function makeInvisible() {
 	document.getElementById("changeTagSelect").style.display = "none";
 	document.getElementById("applyButtonATchange").style.visibility = "hidden";
 	document.getElementById("cancelButtonATchange").style.visibility = "hidden";
+	
+	// clear the selected option of selection
+	// no	document.getElementById("changeTagSelect").selectedIndex = 0;
+	document.getElementById("changeTagSelect").options.length= 0;
+
 	location.reload();
 } // makeInvisible
 

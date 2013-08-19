@@ -2,10 +2,14 @@
 include("php_library.php");
 
 $queries = array("select name from tag order by name asc", 
+				 "select name, tagid from tag order by name asc",
 				 "select name from recipe order by replace(name, '\"', '') asc");
 		
 $count = 0;
+$tagidcount = 0;
+
 $tagArray = array();
+$tagIDArray = array();
 $recipeArray = array();
 
 foreach($queries as $onequery) {
@@ -17,6 +21,17 @@ foreach($queries as $onequery) {
 				array_push($tagArray, ucwords(strtolower($row[0])));
 				break;
 			case 1:
+//				print($tagidcount."<br/>");
+				$tagIDArray[$tagidcount] = array();
+				/*
+					row[0]: tag name
+					row[1]: tag id
+				*/
+				array_push($tagIDArray[$tagidcount], ucwords(strtolower($row[0])));
+				array_push($tagIDArray[$tagidcount], ucwords(strtolower($row[1])));
+				$tagidcount++;
+				break;
+			case 2:
 //				$recipecount++;
 				array_push($recipeArray, ucwords(strtolower($row[0])));
 				break;
@@ -26,7 +41,13 @@ foreach($queries as $onequery) {
 	}
 		$count++;
 		mysql_free_result($result);	
-}		
+}
+/*
+DELETE
+print("<br/>");
+var_dump($tagIDArray);	
+print("<br/>");	
+*/
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -74,7 +95,7 @@ foreach($queries as $onequery) {
 
   <form action="edit_process.php" id="createRecipeForm"> 
     <fieldset>
-    	<legend>CREATE NEW RECIPE</legend>
+    	<legend>CREATE NEW RECIPE --- constructing</legend>
     	<label>Recipe Name*: <input type="text" name="new_recipename" id="recipeNewMUSTname" size="50" /></label><br /><br />
     	<label>Resource Name: <input type="text" name="new_resource" size="48" /></label><br /><br />
 		<label>Resource Link: <input type="text" name="new_link" size="50" /></label><br /><br />
@@ -113,8 +134,8 @@ foreach($queries as $onequery) {
 		<span id="changeTagMemo">Select multiple tags with SUPER key</span><br />
 		<select name="changeTagSelection[]" id="changeTagSelect" multiple="multiple" size="5">
 		<?php		
-			foreach($tagArray as $onetag) {
-				print("<option value='".$onetag."'>".$onetag."</option>");
+			foreach($tagIDArray as $onetag) {
+				print("<option value='".strtolower($onetag[1])."'>".$onetag[0]."</option>");
 			}
 		?>
 		</select>

@@ -33,6 +33,8 @@ include("../skip/mysql_login.php");
   }
   */
   function exec_my_query($query){
+  	
+  	mysql_query("SET NAMES utf8");
   	$result = mysql_query($query);
   	if(!$result) {
     	die("Failed to fetch data: ".mysql_error()."<br />");

@@ -55,7 +55,7 @@ if($purpose == "create_recipe") {
 
 	/* trim the "tags=" and store each tag into array
    	   trimedtags[][0] = tag name
-	    trimedtags[][1] = tag id
+	   trimedtags[][1] = tag id
 	 */
 	$trimedtags = array();
 
@@ -75,9 +75,13 @@ if($purpose == "create_recipe") {
 	$currIDnum = $maxIDnum[0]+1;
 	mysql_free_result($result1);
 
+//	print("<pre>'$recipeName' from edit_process.php</pre><br />\n");
+//	print("<pre>'$resourceName' from edit_process.php</pre><br />\n");
+
+	$result2 = exec_my_query("SET NAMES 'utf8';");	
 	$query2= "insert into recipe value(".$currIDnum.", '".$recipeName."', '".$resourceName."', '".$resourceLink."')";
 	$result2 = exec_my_query($query2);
-
+    
 	if ($result2 != 1) {
 		print("Failed to create new recipe data: ".mysql_error()."<br />");	
 		return;
@@ -130,33 +134,59 @@ if($purpose == "create_recipe") {
 	Change an existing recipe including id, name, resource name, resource link, and tags 
 */
 
-print($_REQUEST["submit"]);
-
-	if($_REQUEST["submit"] == "APPLY") {
-		$origRecipe = $_REQUEST["changeRecipeSelection"];
-		$recipe = $_REQUEST["change_recipename"];
-		$resource = $_REQUEST["change_resource"];
-		$resourceLink = $_REQUEST["change_link"];
+	$origRecipe = $_REQUEST["changeRecipeSelection"];
+	$recipe = $_REQUEST["change_recipename"];
+	$resource = $_REQUEST["change_resource"];
+	$resourceLink = $_REQUEST["change_link"];
 	
+	$newtags = $_REQUEST["changeTagSelection"];
+	
+	try{
+		$transquery = "start transaction";
+		exec_my_query($transquery);	
+
 		$query0 = "select recipeid from recipe where name='".$origRecipe."'";
 		$result0 = exec_my_query($query0);
 		$id = mysql_fetch_row($result0);
 		mysql_free_result($result0);
 	
 		$query1 = "update recipe set name='".$recipe.
-							 "', resource='".$resource.
-							 "', resourcelink='".$resourceLink."' where recipeid = ".$id[0];
+		  		  "', resource='".$resource.
+				  "', resourcelink='".$resourceLink."' where recipeid = ".$id[0];
 		$result1 = exec_my_query($query1);
-	
-		if ($result1 != 1) {
-			print("Failed to update recipe data: ".mysql_error()."<br />");	
-		} else {
-			print("Succeed to update recipe (".$origRecipe."): ");
-			print("<br /> NEW Name: ".$recipe.
-		 		  "<br /> NEW Resource: ".$resource.
-			 	  "<br /> NEW Link: ".$resourceLink."<br />");
+
+		$query2 = "delete from recipeTag where recipeid =".$id[0];
+		$result2 = exec_my_query($query2);
+
+		for($i = 0; $i < count($newtags); $i++) {
+			$query3 = "insert into recipeTag values(".$id[0].", '".$newtags[$i]."')";
+			$result3 = exec_my_query($query3);
 		}
+		
+		$commitquery = "commit";
+		exec_my_query($commitquery);	
+		
+		print("Succeed to update of recipe [ID: ".$id[0].", OLD Name: ".$origRecipe."] ");
+		print("<br /> NEW Name: ".$recipe.
+	 		  "<br /> NEW Resource: ".$resource.
+		 	  "<br /> NEW Link: ".$resourceLink);
+		print("<br /> NEW Tags: ");
+		
+		foreach($newtags as $tagid) {	
+			$query3 = "select name from tag where tagid ='".$tagid."'";
+			$result3 = exec_my_query($query3);
+			$row = mysql_fetch_row($result3);
+			mysql_free_result($result3);
+			
+			print($row[0].", ");
+		}
+
+	} catch(Exception $e) {
+		$rollbackquery = "rollback";
+		exec_my_query($rollbackquery);	
+		print("Error: ".$e);
 	}
+	
 } else if ($purpose == "delete_recipe") {
 /*
 	Delete recipe from RECIPE table, and also from RECIPETAG table

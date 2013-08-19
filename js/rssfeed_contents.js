@@ -106,7 +106,7 @@ function sortByDate(array2d) {
         }
     }
 
-    console.log("index of the beginning of 2nd feed" + begin2ndFeed);
+//    console.log("index of the beginning of 2nd feed" + begin2ndFeed);
 
     while (array2d[begin2ndFeed] != null) {
 
@@ -118,7 +118,7 @@ function sortByDate(array2d) {
 
             if (rslt == 1 && curr == 0) {
 
-                console.log("insert (" + array2d[begin2ndFeed][3] + ") at the top of (" + array2d[curr][3] + ")");
+//                console.log("insert (" + array2d[begin2ndFeed][3] + ") at the top of (" + array2d[curr][3] + ")");
 
                 array2d.splice(curr, 0, array2d[begin2ndFeed]);
                 array2d.splice(begin2ndFeed + 1, 1);
@@ -131,7 +131,7 @@ function sortByDate(array2d) {
 
             } else if (rslt == -1) {
 
-                console.log("insert (" + array2d[begin2ndFeed][3] + ") after (" + array2d[curr][3] + ")");
+//                console.log("insert (" + array2d[begin2ndFeed][3] + ") after (" + array2d[curr][3] + ")");
 
                 array2d.splice(curr + 1, 0, array2d[begin2ndFeed]);
                 array2d.splice(begin2ndFeed + 1, 1);
@@ -157,7 +157,7 @@ function compareDates(c1, c2) {
         rslt = 0;
     }
 
-    console.log("2nd feed (" + c1[3] + "), curr (" + c2[3] + ") : rslt (" + rslt + ")");
+ //   console.log("2nd feed (" + c1[3] + "), curr (" + c2[3] + ") : rslt (" + rslt + ")");
     return rslt;
 } // compareDates
 
@@ -167,32 +167,32 @@ function dumpData(array2d) {
     var index = 0;
     var html = "";
     var a2d;
-	var formedDate;
+//	var formedDate;
 	
     while ( array2d[index] != null) {
 		var post = array2d[index];
 
         /*
-		[1]: title
-		[2]: link
-		[3]: date
-		[4]: site title
+			[1]: title
+			[2]: link
+			[3]: date
+			[4]: site title
 		*/
 
-		formedDate = reformingDate(post);
+		//formedDate = reformingDate(post);
 
         // the html to output the feed to the browser window
         if (index % 2 == 0) {
 
             html += "<tr id='odd'><td><a href='" + post[2] + "'>" + post[1] + "</a><br/>";
-            html += "<span id='siteTitle'>"+ post[4] + "</span>&nbsp;&nbsp;&nbsp;&nbsp;";
-            html += "<span id='datepost'>" + formedDate + "&nbsp;&nbsp;&nbsp;&nbsp;<br/></span></td></tr>";
+            html += "<span id='siteTitle'>"+ post[4] + "</span><br/>";
+            html += "<span id='datepost'>" + post[3] + "<br/></span></td></tr>";
 
         } else if (index % 2 == 1) {
 
             html += "<tr id='even'><td><a href='" + post[2] + "'>" + post[1] + "</a><br/>";
-            html += "<span id='siteTitle'>"+ post[4] + "</span>&nbsp;&nbsp;&nbsp;&nbsp;";
-        	html += "<span id='datepost'>" + formedDate + "<br/></span></td></tr>";
+            html += "<span id='siteTitle'>"+ post[4] + "</span><br/>";
+        	html += "<span id='datepost'>" + post[3] + "<br/></span></td></tr>";
         }
 
         index++;

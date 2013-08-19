@@ -11,13 +11,15 @@ $result = exec_my_query($query);
 //$row1[1]: resource
 //$row1[2]: resource link
 $row1 = mysql_fetch_row($result);
-$resourceInfo .=  $row1[1]." | ".$row1[2];
+$resourceInfo .=  $row1[1]."|".$row1[2];
 
-$query1 = "select name from tag where tagid in (select tagid from recipeTag where recipeid = ".$row1[0].")";
+//$query1 = "select name from tag where tagid in (select tagid from recipeTag where recipeid = ".$row1[0].")";
+//HERE
+$query1 = "select tagid from recipeTag where recipeid = ".$row1[0];
 $result1 = exec_my_query($query1);
 
 while($row2 = mysql_fetch_row($result1)) {
-	$resourceInfo .= " | ".$row2[0];
+	$resourceInfo .= "|".$row2[0];
 };
 
 print($resourceInfo);
