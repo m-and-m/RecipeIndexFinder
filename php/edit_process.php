@@ -1,8 +1,9 @@
-<?php
-include("php_library.php");
-?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<?php
+include("connection.php");
+server_connect();
+?>	
 					  
 <html>
  <head>
@@ -64,25 +65,20 @@ if($purpose == "create_recipe") {
 		$trimedtags[$key][0] = urldecode(trim($value, "tags="));
 	}
 	
-//	print("<br/>AFTER store tag name<br/>");
-//	var_dump($trimedtags);
-
 // 1) complete creating recipe data in RECIPE table	
 	$query1 = "select max(recipeid) from recipe";
-	$result1 = exec_my_query($query1);
+//	$result1 = exec_my_query($query1);
+	$result1 = pdo_query($query1);
 
-	$maxIDnum = mysql_fetch_row($result1);
+	$maxIDnum = $result1->fetch();
 	$currIDnum = $maxIDnum[0]+1;
-	mysql_free_result($result1);
+//	mysql_free_result($result1);
 
-//	print("<pre>'$recipeName' from edit_process.php</pre><br />\n");
-//	print("<pre>'$resourceName' from edit_process.php</pre><br />\n");
-
-	$result2 = exec_my_query("SET NAMES 'utf8';");	
 	$query2= "insert into recipe value(".$currIDnum.", '".$recipeName."', '".$resourceName."', '".$resourceLink."')";
-	$result2 = exec_my_query($query2);
+//	$result2 = exec_my_query($query2);
+	$result2 = pdo_query($query2);
     
-	if ($result2 != 1) {
+	if (!$result2) {
 		print("Failed to create new recipe data: ".mysql_error()."<br />");	
 		return;
 	} 
@@ -97,22 +93,23 @@ if($purpose == "create_recipe") {
 //		print("<br/>key: ".$key." value: ".$value[0]." quoted: ".$vlidatedvalue."<br/>");	
 		
 		$query3 = "select tagid from tag where name = '".$vlidatedvalue."'";
-		$result3 = exec_my_query($query3);
-		$tagID = mysql_fetch_row($result3);
+//		$result3 = exec_my_query($query3);
+		$result3 = pdo_prepare($query3);
+		$result3->execute();
+		$tagID = $result3->fetch();
 		$trimedtags[$key][1] = $tagID[0];
-		mysql_free_result($result3);
+//		mysql_free_result($result3);
 	}
 	
 //	var_dump($trimedtags);
-
 
 // 3) complete adding the set of recipeid + tagid into RECIPETAG table
 	foreach($trimedtags as $key => $value) {	
 		//print("<br/>key: ".$key." value: ".$value[0]."<br/>");
 		$query4 = "insert into recipeTag value(".$currIDnum.", '".$value[1]."')";
-		$result4 = exec_my_query($query4);
+		$result4 = pdo_query($query4);
 
-		if ($result4 != 1) {
+		if ($result4 == false) {
 			print("Failed to add recipeID and tagID into recipeTag: ".mysql_error()."<br />");	
 			return;
 		} 
@@ -142,30 +139,27 @@ if($purpose == "create_recipe") {
 	$newtags = $_REQUEST["changeTagSelection"];
 	
 	try{
-		$transquery = "start transaction";
-		exec_my_query($transquery);	
+		pdo_transactionstart();
 
 		$query0 = "select recipeid from recipe where name='".$origRecipe."'";
-		$result0 = exec_my_query($query0);
-		$id = mysql_fetch_row($result0);
-		mysql_free_result($result0);
+		$result0 = pdo_query($query0);
+		$id = $result0->fetch();
 	
 		$query1 = "update recipe set name='".$recipe.
 		  		  "', resource='".$resource.
 				  "', resourcelink='".$resourceLink."' where recipeid = ".$id[0];
-		$result1 = exec_my_query($query1);
+		$result1 = pdo_query($query1);
 
 		$query2 = "delete from recipeTag where recipeid =".$id[0];
-		$result2 = exec_my_query($query2);
+		$result2 = pdo_query($query2);
 
 		for($i = 0; $i < count($newtags); $i++) {
 			$query3 = "insert into recipeTag values(".$id[0].", '".$newtags[$i]."')";
-			$result3 = exec_my_query($query3);
+			$result3 = pdo_query($query3);
 		}
 		
-		$commitquery = "commit";
-		exec_my_query($commitquery);	
-		
+		pdo_commit();
+				
 		print("Succeed to update of recipe [ID: ".$id[0].", OLD Name: ".$origRecipe."] ");
 		print("<br /> NEW Name: ".$recipe.
 	 		  "<br /> NEW Resource: ".$resource.
@@ -174,16 +168,14 @@ if($purpose == "create_recipe") {
 		
 		foreach($newtags as $tagid) {	
 			$query3 = "select name from tag where tagid ='".$tagid."'";
-			$result3 = exec_my_query($query3);
-			$row = mysql_fetch_row($result3);
-			mysql_free_result($result3);
+			$result3 = pdo_query($query3);
+			$row = $result3->fetch();
 			
 			print($row[0].", ");
 		}
 
 	} catch(Exception $e) {
-		$rollbackquery = "rollback";
-		exec_my_query($rollbackquery);	
+		pdo_rollback();
 		print("Error: ".$e);
 	}
 	
@@ -195,31 +187,27 @@ if($purpose == "create_recipe") {
 	$deleteName = $_REQUEST["deleteRecipeSelection"];
 
 	$query1 = "select recipeid from recipe where name = '".$deleteName."'";
-	$result1 = exec_my_query($query1);
+	$result1 = pdo_query($query1);
 	
-	$deleteID = mysql_fetch_row($result1);
-	mysql_free_result($result1);
+	$deleteID = $result1->fetch();
 
 	try{
-		$transquery = "start transaction";
-		exec_my_query($transquery);	
-
+		pdo_transactionstart();
+		
 		$query2 = "delete from recipeTag where recipeid = ".$deleteID[0];
-		exec_my_query($query2);
+		$result2 = pdo_query($query2);
 
 		$query3 = "delete from recipe where recipeid = ".$deleteID[0];
-		exec_my_query($query3);
+		$result3 = pdo_query($query3);
 
-		$commitquery = "commit";
-		exec_my_query($commitquery);	
-		
+		pdo_commit();
+				
 		print("Succeed to delete recipe: ");
 		print("<br /> ID: ".$deleteID[0].
 			  "<br /> Name: ".$deleteName."<br />");
 
 	} catch(Exception $e) {
-		$rollbackquery = "rollback";
-		exec_my_query($rollbackquery);	
+		pdo_rollback();
 		print("Error: ".$e);
 	}
 } else if($purpose == "create_tag") {
@@ -230,17 +218,16 @@ if($purpose == "create_recipe") {
 //	print("@create tag: ".$tagName."<br />");
 	
 	$query0 = "select * from tag order by tagid desc limit 1";
-	$result0 = exec_my_query($query0);
-	$lastID = mysql_fetch_row($result0);
-	mysql_free_result($result0);	
+	$result0 = pdo_query($query0);
+	$lastID = $result0->fetch();
 	
 	$lastDigit = substr($lastID[0], 1);
 	$currDigit = $lastDigit+1;
 		
 	$query1 = "insert into tag value('T".$currDigit."', '".$tagName."')";
-	$result1 = exec_my_query($query1);
+	$result1 = pdo_query($query1);
 
-	if ($result1 != 1) {
+	if ($result1 == false) {
 		print("Failed to create tag data: ".mysql_error()."<br />");	
 	} else {
 		print("Succeed to create tag: ");
@@ -255,8 +242,8 @@ if($purpose == "create_recipe") {
 	$changeTag = $_REQUEST["change_tag"];
 	
 	$query = "update tag set name='".$changeTag."' where name='".$originalTag."'";
-	$result = exec_my_query($query);
-	if ($result != 1) {
+	$result = pdo_query($query);
+	if ($result == false) {
 		print("Failed to update tag data: ".mysql_error()."<br />");	
 	} else {
 		print("Succeed to update tag: ");
@@ -270,34 +257,30 @@ if($purpose == "create_recipe") {
 	$deleteName = $_REQUEST["deleteTagSelection"];
 
 	$query0 = "select tagid from tag where name = '".$deleteName."'";
-	$result0 = exec_my_query($query0);	
-	$deleteID = mysql_fetch_row($result0);
-	mysql_free_result($result0);
+	$result0 = pdo_query($query0);
+	$deleteID = $result0->fetch();
+//	mysql_free_result($result0);
 	
 	try{
-		$transquery = "start transaction";
-		exec_my_query($transquery);	
-
+		pdo_transactionstart();
+		
 		$query1 = "delete from recipeTag where tagid = '".$deleteID[0]."'";
-		exec_my_query($query1);	
+		$result1 = pdo_query($query1);
 
 		$query2 = "delete from tag where name='".$deleteName."'";
-		exec_my_query($query2);
+		$result2 = pdo_query($query2);
 
-		$commitquery = "commit";
-		exec_my_query($commitquery);	
+		pdo_commit();		
 		
 		print("Succeed to delete tag: ");
 		print("<br /> ID: ".$deleteID[0].
 			  "<br /> Name: ".str_replace("\\", "", $deleteName)."<br />");
 
 	} catch(Exception $e) {
-		$rollbackquery = "rollback";
-		exec_my_query($rollbackquery);	
+		pdo_rollback();
 		print("Error: ".$e);
 	}	
 }
-  disconnectMysql();
 ?>
  <br /><br /><a href="edit.php"><input type="button" value="BACK to EDIT" /></a> 
  </div>
@@ -310,3 +293,6 @@ if($purpose == "create_recipe") {
  </footer> 
  </body>
 </html>
+<?php
+	 server_disconnect();
+ ?>

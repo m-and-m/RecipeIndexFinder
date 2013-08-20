@@ -1,30 +1,27 @@
 <?php
-include("php_library.php");
+include("connection.php");
+server_connect();
+
 $recipe = $_GET["recipe"];
 
 $resourceInfo = "";
 
 $query = "select recipeid, resource, resourcelink from recipe where name='".$recipe."'";
-$result = exec_my_query($query);
+$result = pdo_query($query);
 
-//$row1[0]: recipe id
-//$row1[1]: resource
-//$row1[2]: resource link
-$row1 = mysql_fetch_row($result);
-$resourceInfo .=  $row1[1]."|".$row1[2];
+$row1 = $result->fetch();
+$resourceInfo .=  $row1["resource"]."|".$row1["resourcelink"];
 
-//$query1 = "select name from tag where tagid in (select tagid from recipeTag where recipeid = ".$row1[0].")";
-//HERE
-$query1 = "select tagid from recipeTag where recipeid = ".$row1[0];
-$result1 = exec_my_query($query1);
+$query1 = "select tagid from recipeTag where recipeid = ".$row1["recipeid"];
+$result1 = pdo_query($query1);
 
-while($row2 = mysql_fetch_row($result1)) {
-	$resourceInfo .= "|".$row2[0];
-};
+if($result1->rowCount() != 0) {
+	foreach($result1 as $row2) {
+		$resourceInfo .= "|".$row2[0];
+	}
+}
 
 print($resourceInfo);
 
-mysql_free_result($result);
-mysql_free_result($result1);
-disconnectMysql();
+server_disconnect();
 ?>

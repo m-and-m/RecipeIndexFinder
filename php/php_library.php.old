@@ -1,4 +1,47 @@
 <?php
+include("../skip/mysql_login.php");
+
+/******************************* (DIS)CONNECT TO SERVER ************************************/
+
+  $conn = mysql_connect($db_host, $db_user, $db_pass);
+  if(!$conn) {
+  	die("Failed to connect database: ".mysql_error()."<br />");
+  } 
+  
+  /*
+  Choose database: index_finder
+  */
+  $db = mysql_select_db($db_name, $conn);
+  if(!$db) {
+    die("Failed to select database, 'index_finder': ".mysql_error()."<br />");
+  } 
+
+  function disconnectMysql() {
+    GLOBAL $conn;
+	mysql_close($conn);
+  }
+/********************************** QUERY *****************************************/
+  /*
+  Execute the giving query
+  
+  "mysql_query()" will get the data in this form:
+  array(4) {
+ 	 [0]=> valueA
+ 	 ["recipeid"]=> valueA
+ 	 [1]=> valueB
+ 	 ["name"]=> valueB
+  }
+  */
+  function exec_my_query($query){
+  	
+  	mysql_query("SET NAMES utf8");
+  	$result = mysql_query($query);
+  	if(!$result) {
+    	die("Failed to fetch data: ".mysql_error()."<br />");
+  	}
+  	return $result;
+  }
+  
 /******************************** DISPLAY IN 2 COLUMNS *********************************/ 
 
   function display_list($numRow, $rawData, $id, $name, $file) {
@@ -27,8 +70,7 @@
   	$rightData = array();
   	$count = 1;
 
-//  	while ($row = mysql_fetch_array($rawData)) { 
-	foreach($rawData as $row) {
+  	while ($row = mysql_fetch_array($rawData)) { 
   		if($count <= $half_num_row) {
   			array_push($leftData, $row);
   		} else if ($count > $half_num_row) {

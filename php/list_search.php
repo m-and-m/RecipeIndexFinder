@@ -1,12 +1,15 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <?php
+include("connection.php");
 include("php_library.php");
+server_connect();
+
 // NOT BEST WAY to take care of special characters...
 //currently support only  " (double quotes)'
 $query = "select recipeid, name from recipe order by replace(name, '\"', '') asc";
-$result = exec_my_query($query);
+$result = pdo_query($query);
 ?>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 					  
 <html>
  <head>
@@ -34,7 +37,7 @@ $result = exec_my_query($query);
  <div class="content">
   <hr>
   <?php
-  $numRow = mysql_num_rows($result);
+  $numRow = $result->rowCount();
   print("<h2>List Search Page (".$numRow." items)</h2>");
 
   print("<h3>You will see [IndexID : Recipe Title] ------------------------------------------------ </h3>");
@@ -47,8 +50,6 @@ $result = exec_my_query($query);
 
   display_list($numRow, $result, $id, $name, $filename);
     
-  mysql_free_result($result);
-  disconnectMysql();
  ?>
  
  </div>
@@ -61,3 +62,7 @@ $result = exec_my_query($query);
  </body>
  
 </html>
+
+<?php
+	 server_disconnect();
+ ?>

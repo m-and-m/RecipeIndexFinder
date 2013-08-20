@@ -1,5 +1,10 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+	
 <?php
+include("connection.php");
 include("php_library.php");
+server_connect();
+
 $key = $_REQUEST["key"];
 $search_type = $_REQUEST["search_type"];
 
@@ -13,11 +18,9 @@ if($search_type == "recipe") {
 			 "order by name asc"; 
 }
 
-$result = exec_my_query($query);
-?>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-					  
+$result = pdo_query($query);
+?>	
+				  
 <html>
  <head>
  	<title>INDEX FINDER</title>
@@ -44,7 +47,7 @@ $result = exec_my_query($query);
  <div class="content">
   <hr>  
   <?php
-  $numRow = mysql_num_rows($result);
+  $numRow = $result->rowCount();
   print("<h2>Keyword Result Page (".$numRow." items)</h2>");
   print("<h3>You will see [IndexID : Recipe Title] ------------------------------------------------ </h3>");
   print("<span>Your keyword: '".$key."'</span><br />");
@@ -57,8 +60,6 @@ $result = exec_my_query($query);
 
   display_list($numRow, $result, $id, $name, $filename);
     
-  mysql_free_result($result);
-  disconnectMysql();
  ?>
  </div>
  
@@ -71,3 +72,6 @@ $result = exec_my_query($query);
  </body>
  
 </html>
+<?php
+	 server_disconnect();
+ ?>

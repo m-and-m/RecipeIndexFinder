@@ -1,12 +1,14 @@
-<?php
-include("php_library.php");
-$query = "select sitename, sitexml, siteurl from rssWebSite order by sitename asc";
-$result = exec_my_query("SET NAMES 'utf8';");
-$result = exec_my_query($query);
-?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-				  
+
+<?php
+include("connection.php");
+include("php_library.php");
+server_connect();
+
+$query = "select sitename, sitexml, siteurl from rssWebSite order by sitename asc";
+$result = pdo_query($query);
+?>			  
+
 <html>
  <head>
  	<title>INDEX FINDER</title>
@@ -58,7 +60,7 @@ $result = exec_my_query($query);
    		$site[2]:url
    		*/
    		// store the data (site name/url) in 2d array in order to do sort
-   		while($site = mysql_fetch_row($result)) {
+   		foreach ($result as $site) {
 			
 			// store site name/url in arraySites to display all subscribed sites
    			$arraySites[$index][0] = $site[0];
@@ -67,8 +69,6 @@ $result = exec_my_query($query);
 
    			$index++;			
    		}
-
-		mysql_free_result($result);
 		
 		// sort using with a function called 'sitenameCmp' in php_library.php
 		usort($arraySites, "sitenameCmp");	
@@ -76,20 +76,14 @@ $result = exec_my_query($query);
 		// dump sorted arrays	
 		while (list($key, $value) = each($arraySites)) {
 		
-//			 print "<tr><td><img src='../imgs/trash.png' height='17' width='17' id='rmvcnt'></td>".
-//			 "<td><span hidden id='xml'>".$value[1].",</span><a href=".$value[2]." id='selectname'>".$value[0]."</a></td></tr>";
-
-			 print "<tr><td><img src='../imgs/trash.png' height='17' width='17' class='rmvcnt'/>".
-			 "<a href=".$value[2]." class='selectname'>".$value[0]."</a><span hidden id='xml'>".$value[1].",</span></td></tr>";
+			 print ("<tr><td><img src='../imgs/trash.png' height='17' width='17' class='rmvcnt'/>".
+			 "<a href=".$value[2]." class='selectname'>".$value[0]."</a><span hidden id='xml'>".$value[1].",</span></td></tr>");
 
 		}
    ?>
    </table>
    </div>
  </div>
-<?php
-   	disconnectMysql();
-?>
  <footer>
   <hr>
   <section>
@@ -99,3 +93,7 @@ $result = exec_my_query($query);
  </body>
  
 </html>
+ <?php
+	 server_disconnect();
+ ?>
+

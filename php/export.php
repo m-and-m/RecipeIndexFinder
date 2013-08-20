@@ -1,18 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<?php
 
-	try{
-		$pdo = new PDO("mysql:host=localhost; dbname=index_finder", "indexfinder", "winter13");	
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	} catch (PDOException $e) {
-		print("Connection Failed: ".$e->getMessage());
-	}
-	
-/* OK	
-	foreach($pdo->query('SELECT name from recipe') as $row) {
-        print_r($row[0]."<br/>");
-    }
-*/
+<?php
+include("connection.php");
+server_connect();
 ?>	
 		  
 <html>
@@ -48,12 +38,16 @@
   <span>Choose 1 file (.csv) to export / view:</span><br/><br/>
 
   <?php
- 	foreach( $pdo->query("show tables") as $tablename) {
+  
+	$query = "show tables";
+	$result = pdo_query($query);
+
+ 	foreach($result as $tablename) {
+
 		print("<label><input type='radio' name='filechoice' value='".
 			   $tablename[0]."'/>".ucfirst($tablename[0])."</label><br/>");
 	}
 	
-	$pdo=null;
   ?>
   <br/>
   <input type="submit" value="EXPORT" id="export"/>
@@ -67,7 +61,6 @@
 <!--Make appear later?-->  
   
  </div>
- 
  <footer>
   <hr>
   <section>
@@ -77,3 +70,7 @@
  </body>
  
 </html>
+
+ <?php
+	 server_disconnect();
+ ?>

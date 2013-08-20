@@ -1,6 +1,7 @@
 <?php
-include("php_library.php");
-
+include("connection.php");
+server_connect();	
+	
 $queries = array("select name from tag order by name asc", 
 				 "select name, tagid from tag order by name asc",
 				 "select name from recipe order by replace(name, '\"', '') asc");
@@ -13,8 +14,10 @@ $tagIDArray = array();
 $recipeArray = array();
 
 foreach($queries as $onequery) {
-	$result = exec_my_query($onequery);
-	while($row = mysql_fetch_row($result)) {
+
+	$result = pdo_query($onequery);
+	
+ 	foreach($result as $row) {
 		switch($count) {
 			case 0:
 //				$tagcount++;
@@ -40,14 +43,8 @@ foreach($queries as $onequery) {
 		}
 	}
 		$count++;
-		mysql_free_result($result);	
+		$result = "";
 }
-/*
-DELETE
-print("<br/>");
-var_dump($tagIDArray);	
-print("<br/>");	
-*/
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -225,7 +222,8 @@ print("<br/>");
   </section>
  </footer> 
  </body>
- <?php
-   	disconnectMysql();
- ?>
 </html>
+
+<?php
+	 server_disconnect();
+ ?>

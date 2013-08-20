@@ -1,11 +1,12 @@
-<?php
-include("php_library.php");
-$query = "select tagid, name from tag group by tagid order by name asc";
-$result = exec_my_query($query);
-?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-					  
+
+<?php
+include("connection.php");
+include("php_library.php");
+
+server_connect();
+?>
+				  
 <html>
  <head>
  	<title>TAG SEARCH</title>
@@ -33,7 +34,11 @@ $result = exec_my_query($query);
   <hr>
   
   <?php
-  $numRow = mysql_num_rows($result);
+  
+  $query = "select tagid, name from tag group by tagid order by name asc";
+  $result = pdo_query($query);
+
+  $numRow = $result->rowCount();
   print("<h2>Tag Search Page (".$numRow." items)</h2>");
   
   $id = "tagid";
@@ -43,9 +48,6 @@ $result = exec_my_query($query);
   }
   
   display_list($numRow, $result, $id, $name, $filename);
-    
-  mysql_free_result($result);
-  disconnectMysql();
   ?>
 
  </div>
@@ -59,3 +61,7 @@ $result = exec_my_query($query);
  </body>
  
 </html>
+
+ <?php
+	 server_disconnect();
+ ?>
