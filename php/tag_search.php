@@ -5,7 +5,6 @@ include("connection.php");
 include("php_library.php");
 
 server_connect();
-
 ?>
 				  
 <html>

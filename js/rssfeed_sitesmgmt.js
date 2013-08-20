@@ -46,6 +46,9 @@ function validateRSS(data) {
     $.ajax({
         type: "GET",
         url: "../php/rssfeed_addURL.php?rssname="+feedtitle+"&rssurl=" + feedurl+"&rssxml="+MyGlobal2.feedxml,
+        /*
+        url: "../php/info.php?rssname="+feedtitle+"&rssurl=" + feedurl+"&rssxml="+MyGlobal2.feedxml,
+        */
         success: confirmation,
         error: function () {
             alert("failed to access to php file @rssfeed_addURLs.js");
@@ -56,12 +59,14 @@ function validateRSS(data) {
 
 /****************************** REMOVE RSS FEED ******************************/
 function rmv_action() {
+
+var siteid = $(this).parent().children("span#siteid").text();
 var sitename = $(this).parent().children("a.selectname").text();
-var siteurl = $(this).parent().children("a.selectname").attr("href");
-	alert(sitename);
+//var siteurl = $(this).parent().children("a.selectname").attr("href");
+	alert(siteid);
 	    $.ajax({
         type: "GET",
-        url: "../php/rssfeed_rmvURL.php?rssurl="+siteurl+"&rssname="+sitename,
+        url: "../php/rssfeed_rmvURL.php?siteid="+siteid+"&rssname="+sitename,
         success: confirmation,
         error: function () {
             alert("failed to access to php file @rssfeed_sitemgmt.js");

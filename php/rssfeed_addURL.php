@@ -19,7 +19,7 @@ $new_numpart = $id_numpart + 1;
 //OK print("ID: ".$siteid[0]."\n #part: ".$id_numpart."\n new #part: ".$new_numpart);
 
 $query1 = "insert into rssWebSite values('RW".$new_numpart."', '".$name."', '".$xml."', '".$url."')";
-$result1 = pdo_query($query1);
+	$result1 = pdo_query($query1);
 
 	if (!$result1) {
 		print("Failed to add new content: ".mysql_error());	

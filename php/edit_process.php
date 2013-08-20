@@ -3,6 +3,8 @@
 <?php
 include("connection.php");
 server_connect();
+iconv_set_encoding("internal_encoding", "UTF-8");
+iconv_set_encoding("output_encoding", "UTF-8");
 ?>	
 					  
 <html>
@@ -194,10 +196,10 @@ if($purpose == "create_recipe") {
 	try{
 		pdo_transactionstart();
 		
-		$query2 = "delete from recipeTag where recipeid = ".$deleteID[0];
+		$query2 = "delete from recipe where recipeid = ".$deleteID[0];
 		$result2 = pdo_query($query2);
 
-		$query3 = "delete from recipe where recipeid = ".$deleteID[0];
+		$query3 = "delete from recipeTag where recipeid = ".$deleteID[0];
 		$result3 = pdo_query($query3);
 
 		pdo_commit();
@@ -224,7 +226,7 @@ if($purpose == "create_recipe") {
 	$lastDigit = substr($lastID[0], 1);
 	$currDigit = $lastDigit+1;
 		
-	$query1 = "insert into tag value('T".$currDigit."', '".$tagName."')";
+	$query1 = "insert into tag values('T".$currDigit."', '".$tagName."')";
 	$result1 = pdo_query($query1);
 
 	if ($result1 == false) {
@@ -264,11 +266,12 @@ if($purpose == "create_recipe") {
 	try{
 		pdo_transactionstart();
 		
-		$query1 = "delete from recipeTag where tagid = '".$deleteID[0]."'";
+		$query1 = "delete from tag where tagid = '".$deleteID[0]."'";
 		$result1 = pdo_query($query1);
 
-		$query2 = "delete from tag where name='".$deleteName."'";
+		$query2 = "delete from recipeTag where tagid = '".$deleteID[0]."'";
 		$result2 = pdo_query($query2);
+
 
 		pdo_commit();		
 		

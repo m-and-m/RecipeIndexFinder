@@ -5,7 +5,9 @@ include("connection.php");
 include("php_library.php");
 server_connect();
 
-$query = "select sitename, sitexml, siteurl from rssWebSite order by sitename asc";
+//$query = "select sitename, sitexml, siteurl from rssWebSite order by sitename asc";
+$query = "select * from rssWebSite order by sitename asc";
+
 $result = pdo_query($query);
 ?>			  
 
@@ -55,9 +57,10 @@ $result = pdo_query($query);
    		$index = 0;
    		
    		/*
-   		$site[0]:name
-   		$site[1]:xml
-   		$site[2]:url
+   		$site[0]:id
+   		$site[1]:name
+   		$site[2]:xml
+   		$site[3]:url
    		*/
    		// store the data (site name/url) in 2d array in order to do sort
    		foreach ($result as $site) {
@@ -66,6 +69,7 @@ $result = pdo_query($query);
    			$arraySites[$index][0] = $site[0];
 			$arraySites[$index][1] = $site[1];   
 			$arraySites[$index][2] = $site[2];   
+			$arraySites[$index][3] = $site[3];   
 
    			$index++;			
    		}
@@ -77,7 +81,8 @@ $result = pdo_query($query);
 		while (list($key, $value) = each($arraySites)) {
 		
 			 print ("<tr><td><img src='../imgs/trash.png' height='17' width='17' class='rmvcnt'/>".
-			 "<a href=".$value[2]." class='selectname'>".$value[0]."</a><span hidden id='xml'>".$value[1].",</span></td></tr>");
+			 "<a href=".$value[3]." class='selectname'>".$value[1]."</a><span hidden id='siteid'>".$value[0]."</span>".
+			 "<span hidden id='xml'>".$value[2].",</span></td></tr>");
 
 		}
    ?>

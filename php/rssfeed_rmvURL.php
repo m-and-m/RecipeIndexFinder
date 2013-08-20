@@ -3,16 +3,19 @@ include("connection.php");
 server_connect();
 
 $name = $_GET["rssname"];
-$url = $_GET["rssurl"];
+$siteid = $_GET["siteid"];
 
-$query = "delete from rssWebSite where siteurl = '".$url."'";
+pdo_transactionstart();
+
+$query = "delete from rssWebSite where siteid = '".$siteid."'";
 $result = pdo_query($query);
 
-	if (!$result) {
+	if ($result == false) {
 		print("Failed to add new content: ".mysql_error());	
 	} else {
+		pdo_commit();
 		print("OK: \n NAME(".$name.") is removed");
 	}
-	
+
 server_disconnect();
 ?>

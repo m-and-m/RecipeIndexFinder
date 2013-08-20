@@ -150,7 +150,6 @@ foreach($queries as $onequery) {
     <fieldset>
     	<legend>DELETE RECIPE</legend>
 		<select name="deleteRecipeSelection" id="deleteRecipeSelect" >
-
 		<?php
 			foreach($recipeArray as $onerecipe) {
 				print("<option>".$onerecipe."</option>");
@@ -169,6 +168,9 @@ foreach($queries as $onequery) {
   <div id="tag">
   <h3> TAG DATA SECTION --------------------------------- </h3>  
   <form action="edit_process.php" id="createTagForm">
+  <!-- 
+    <form action="info.php" id="createTagForm">
+  -->
     <fieldset>
     	<legend>CREATE NEW TAG</legend>
     	<label>Tag Name*: <input type="text" name="new_tag" id="tagNewMUSTname" size="50" /></label><br /><br />
@@ -199,7 +201,7 @@ foreach($queries as $onequery) {
   <form action="edit_process.php" id="deleteTagForm">  
   <fieldset>
     	<legend>DELETE TAG</legend>
-		<select name="deleteTagSelection" id="tagSelectDelete" >
+		<select name="deleteTagSelection" id="tagSelectDelete">
 		<?php
 			foreach($tagArray as $onetag) {
 				print("<option>".$onetag."</option>");

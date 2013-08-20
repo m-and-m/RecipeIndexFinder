@@ -1,4 +1,12 @@
 $(document).ready(function () {
+	//
+	$("#recipeSelect").prop("selectedIndex", -1);
+	$("#deleteRecipeSelect").prop("selectedIndex", -1);
+	$("#tagSelectChange").prop("selectedIndex", -1);
+	$("#tagSelectDelete").prop("selectedIndex", -1);
+
+
+
     // create recipe
     document.getElementById("createRecipeForm").onsubmit = checkNewRecipeName;
     // change recipe
