@@ -6,7 +6,7 @@ html, body {
 
 /**HEADER**/
 header h1 {
-	color: #f800a6; /*dark pink*/
+	color: #e54268; /* dark red-pink */
 	text-align: center;
 }
 
@@ -93,7 +93,7 @@ header {
 }
 
 .content h2, h3 {
-	color: #f800a6; /*dark pink*/
+	color: #e54268; /* dark red-pink */
 }
 
 .content span {

@@ -22,7 +22,7 @@ hr#exportviewline {
 #table_content th {
 	font-weight: normal;
 	font-size: 14px;
-/*	color: #990033; */
+/*	color: #990033; */ /* dark red */
 	color: #b3003c; 
 	padding: 15px 10px 10px;
 	border-right: 1px solid #f19baf;

@@ -1,11 +1,8 @@
 $(document).ready(function () {
-	//
-	$("#recipeSelect").prop("selectedIndex", -1);
+	// drop down check list with initial empty option
 	$("#deleteRecipeSelect").prop("selectedIndex", -1);
 	$("#tagSelectChange").prop("selectedIndex", -1);
 	$("#tagSelectDelete").prop("selectedIndex", -1);
-
-
 
     // create recipe
     document.getElementById("createRecipeForm").onsubmit = checkNewRecipeName;
@@ -86,18 +83,23 @@ function makeVisible() {
 	document.getElementById("applyButtonATchange").style.visibility = "visible";
 	document.getElementById("cancelButtonATchange").style.visibility = "visible";
 	
+	
+	// get recipe name from drop down checklist
 	var recipe = document.getElementById("recipeSelect").value;
+	// get all information about the recipe
 	var resourceResult = displayResource(recipe);
 	
-//	alert(resourceResult);
+	console.log("fetch the all info about the recipe through ajax...\n");
+	console.log(resourceResult);
 
-	/* fieldElement[0]: resource name
+	var fieldElement = resourceResult.split("\|");
+	/* 
+	   fieldElement[0]: resource name
 	   fieldElement[1]: resource link
 	   fieldElement[2+]: tag ids
 	*/
-	var fieldElement = resourceResult.split("\|");
 	
-	alert(fieldElement);
+	//alert(fieldElement);
 
 	document.getElementById("changeName").value = recipe;
 	document.getElementById("changeResource").value = fieldElement[0];
@@ -223,28 +225,6 @@ function isThisMyRegEx(str) {
 } // isThisMyRegEx
 
 /******************** UNUSED FUNCTIONS ***************************
-	new Ajax.Request("edit_fetchResource.php",
-	{
-	 method: "get",
-	 parameters: recipe;
-	 onSuccess: displayResource;
-	// onFailure: ajaxFailed;
-	// onException: ajaxFailed;
-	}
-	);
-
-function ajaxFailed(ajax, exception) {
-	var msg = "Error making Ajax request:\n\n";
-	if(exception){
-		msg += "Exception: "+exception.message;
-	} else {
-		msg += "Server status:\n"+ajax.status+" "+ajax.statusText+
-			   "\n\nServer response text:\n"+ajax.responseText;
-	}
-	
-	alert(msg);
-} // ajaxFailed
-
 function checkPass() {
 	
 	do {

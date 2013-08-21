@@ -34,7 +34,8 @@ server_connect();
  <div class="content">
   <hr>
   <h2>Export Data Page</h2>
-  
+  <h3> ----------------------------------------------------------------- </h3><br/>
+
   <span>Choose 1 file (.csv) to export / view:</span><br/><br/>
 
   <?php

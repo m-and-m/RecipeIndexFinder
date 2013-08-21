@@ -1,7 +1,6 @@
 window.onload = function() {
 	document.getElementById("keyRecipeSearch").onsubmit = checkRecipeKey;
 	document.getElementById("keyTagSearch").onsubmit = checkTagKey;
-
 };
 
 function checkRecipeKey() {

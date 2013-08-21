@@ -40,7 +40,8 @@ $result = pdo_query($query);
   $numRow = $result->rowCount();
   print("<h2>List Search Page (".$numRow." items)</h2>");
 
-  print("<h3>You will see [IndexID : Recipe Title] ------------------------------------------------ </h3>");
+  print("<h3>You will see [IndexID : Recipe Title] ".
+  		"----------------------------------------------------------------------- </h3>");
  
   $id = "recipeid";
   $name = "name";

@@ -92,7 +92,7 @@ foreach($queries as $onequery) {
 
   <form action="edit_process.php" id="createRecipeForm"> 
     <fieldset>
-    	<legend>CREATE NEW RECIPE --- constructing</legend>
+    	<legend>CREATE NEW RECIPE</legend>
     	<label>Recipe Name*: <input type="text" name="new_recipename" id="recipeNewMUSTname" size="50" /></label><br /><br />
     	<label>Resource Name: <input type="text" name="new_resource" size="48" /></label><br /><br />
 		<label>Resource Link: <input type="text" name="new_link" size="50" /></label><br /><br />
@@ -113,7 +113,7 @@ foreach($queries as $onequery) {
 
   <form action="edit_process.php" id="changeRecipeForm">  
   <fieldset>
-    	<legend>CHANGE RECIPE --- constructing</legend>
+    	<legend>CHANGE RECIPE</legend>
 		<span>I want to change this recipe: </span>
 		<select name="changeRecipeSelection" id="recipeSelect" >
 		<?php

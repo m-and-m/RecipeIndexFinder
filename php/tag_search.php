@@ -40,6 +40,8 @@ server_connect();
 
   $numRow = $result->rowCount();
   print("<h2>Tag Search Page (".$numRow." items)</h2>");
+ 
+  print("<h3> ----------------------------------------------------------------- </h3>");
   
   $id = "tagid";
   $name = "name";
