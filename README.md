@@ -8,6 +8,10 @@ tag search, keyword search, and the list of all tag and recipe. As for manage, i
 add, delete, modify, and export data. In the home page, there is RSS feeds from favorite website or homepage (only support xml 2.0). 
 Be able to (un)subscribe RSS from the page.
 
+Tool and Language
+--------------
+MAMP, MySQL, PHP, JavaScript, jQuery, AJAX, and HTML/CSS
+
 Table Schema  
 --------------
 CONTENTS
