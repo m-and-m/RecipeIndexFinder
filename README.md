@@ -2,15 +2,16 @@ Recipe Index Finder
 =================
 Description
 --------------
-This is the search engine based on web browser for searching the recipe index.
-The application has 3 features: search data, manage data, and RSS feed. As for the searching, it supports multiple ways to find the recipe index: 
-tag search, keyword search, and the list of all tag and recipe. As for the management, it makes the data management easy from the web page:
-add, delete, modify, and export data. In the home page, there is RSS feeds from favorite website or homepage (only support xml 2.0). 
-Be able to (un)subscribe the RSS from the page.
+This is a search engine for recipe indexes. I print my recipies on Index Cards and number them. 
+It is difficult to keep track of the ordering, so I wrote this simple database to more easily locate a specific recipe. 
 
-Tool and Language
+The application has 3 features: search data, manage data, and view RSS feeds. As for the searching, it supports multiple ways to find a recipe's index: 
+tag or keyword search, and a list of all tags and recipes. As for managing data, add, delete, modify, and export is supported.
+In the home page, you can view RSS feeds from favorite recipe websites (only xml 2.0 is supported currently). Also, able to subscribe and unsubscribe the RSS feeds.
+
+Tools and Languages
 --------------
-MAMP, MySQL, PHP, JavaScript, jQuery, AJAX, and HTML/CSS
+MAMP (Apache, MySQL, PHP), JavaScript, jQuery, AJAX, and HTML/CSS
 
 Table Schema  
 --------------
