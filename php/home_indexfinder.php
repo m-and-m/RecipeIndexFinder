@@ -17,7 +17,7 @@ $result = pdo_query($query);
 	<meta http-equiv="Content-type" content="text/html; charset=UTF-8" > 	
  	<link href="../css/indexfinder_design.css" type="text/css" rel="stylesheet" media="screen"/>
  	<link href="../css/rss_design.css" type="text/css" rel="stylesheet" media="screen"/>
-	<script src="../js/source/jquery-1.6.1.min.js" type="text/javascript"></script>	
+<!--	<script src="../js/source/jquery-1.6.1.min.js" type="text/javascript"></script>	-->
 	<script src="../js/source/jquery-v1.6.1.js" type="text/javascript"></script>	
 	<script src="../js/rssfeed_contents.js" type="text/javascript"></script> 
 	<script src="../js/rssfeed_sitesmgmt.js" type="text/javascript"></script>
@@ -42,7 +42,7 @@ $result = pdo_query($query);
  
  <div class="content">
   <hr>
-  <h2>Today's RSS Feed*:)</h2>
+  <h2>Today's RSS Feed *:)</h2>
   <span>Turn on JavaScript to use this program.</span>
   <h3> --------------------------------------------------------------- </h3>
   <!-- RSS feeds come here -->

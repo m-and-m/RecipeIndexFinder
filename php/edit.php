@@ -84,7 +84,7 @@ foreach($queries as $onequery) {
  
  <div class="content">
   <hr>
-  <h2>Edit Data Page (*: MUST fill the area)</h2>
+  <h2>Edit Data Page (*: Required Fields )</h2>
   
   <!--RECIPE EDIT-->
   <div id="recipe">
