@@ -8,7 +8,8 @@ As for search, it supports multiple ways to find the recipe index: tag search, k
 As for manage, it makes the data management easy from the web page: add, delete, modify, and export data.
 In the home page, there is RSS feeds from favorite website or homepage (only support xml 2.0). Be able to (un)subscribe from the page.
 
-#Table Schema#  
+Table Schema  
+--------------
 CONTENTS
 ```
 recipeid INT NOT NULL,
@@ -43,6 +44,13 @@ tagid VARCHAR(10) NOT NULL
 name VARCHAR(30)
 PRIMARY KEY(tagid)
 ```
-#Screenshot#
+Screenshot
+--------------
 ![alt text](./imgs/home.png "HOME")
+![alt text](./imgs/keyword.png "KEYWORD")
+![alt text](./imgs/list.png "LIST")
+![alt text](./imgs/tag.png "TAG")
+![alt text](./imgs/edit.png "EDIT")
+![alt text](./imgs/export.png "EXPORT")
+
 
