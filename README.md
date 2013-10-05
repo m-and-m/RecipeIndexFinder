@@ -1,6 +1,7 @@
 Recipe Index Finder
 =================
-#Description#
+Description
+--------------
 This is the search engine based on web application for searching the recipe index.
 The application has 3 features: search, manage, and RSS feed.
 As for search, it supports multiple ways to find the recipe index: tag search, keyword search, and the list of all tag and recipe.   
